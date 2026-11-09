@@ -61,3 +61,4 @@ if command -v open >/dev/null 2>&1; then
   sleep 1
   open "http://localhost:5173/"
 fi
+

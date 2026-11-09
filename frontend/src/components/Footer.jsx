@@ -61,22 +61,20 @@ export default function Footer() {
               <li><Link to="/about" style={{ color: "#9cb3a7", fontSize: "0.95rem" }}>Early Years & Nursery (2–5 yrs)</Link></li>
               <li><Link to="/about" style={{ color: "#9cb3a7", fontSize: "0.95rem" }}>Pre-Prep Department (5–8 yrs)</Link></li>
               <li><Link to="/about" style={{ color: "#9cb3a7", fontSize: "0.95rem" }}>Junior Prep Academy (8–13 yrs)</Link></li>
-              <li><Link to="/gallery" style={{ color: "#9cb3a7", fontSize: "0.95rem" }}>Forest School & Woodlands</Link></li>
-              <li><Link to="/gallery" style={{ color: "#9cb3a7", fontSize: "0.95rem" }}>STEM, Robotics & Arts</Link></li>
+              <li><Link to="/about" style={{ color: "#9cb3a7", fontSize: "0.95rem" }}>Forest School & Outdoor Science</Link></li>
+              <li><Link to="/about" style={{ color: "#9cb3a7", fontSize: "0.95rem" }}>Creative Arts & Enrichment</Link></li>
             </ul>
           </div>
 
           {/* Column 3: Quick Navigation */}
           <div>
             <h4 style={{ fontFamily: "var(--font-serif)", fontSize: "1.15rem", fontWeight: 700, color: "#ffffff", marginBottom: "1.25rem", borderBottom: "2px solid var(--accent)", display: "inline-block", paddingBottom: "0.3rem" }}>
-              Quick Links
+              Navigation
             </h4>
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
               <li><Link to="/" style={{ color: "#9cb3a7", fontSize: "0.95rem" }}>Home Page</Link></li>
-              <li><Link to="/about" style={{ color: "#9cb3a7", fontSize: "0.95rem" }}>Headmaster's Welcome</Link></li>
-              <li><Link to="/gallery" style={{ color: "#9cb3a7", fontSize: "0.95rem" }}>Campus Photography & Film</Link></li>
-              <li><Link to="/notices" style={{ color: "#9cb3a7", fontSize: "0.95rem" }}>School Circulars & Dates</Link></li>
-              <li><Link to="/contact" style={{ color: "#9cb3a7", fontSize: "0.95rem" }}>Book a Visit & Contact</Link></li>
+              <li><Link to="/about" style={{ color: "#9cb3a7", fontSize: "0.95rem" }}>Headmaster's Welcome & Ethos</Link></li>
+              <li><Link to="/contact" style={{ color: "#9cb3a7", fontSize: "0.95rem" }}>Arrange a Visit</Link></li>
               <li><Link to="/login" style={{ color: "var(--accent)", fontWeight: 800, fontSize: "0.95rem" }}>Staff & Teacher Portal 🔐 →</Link></li>
             </ul>
           </div>
