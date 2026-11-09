@@ -6,46 +6,55 @@ export default function GalleryPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [activePhoto, setActivePhoto] = useState(null);
 
-  const categories = ["All", "Academics", "Sports", "Campus", "Events"];
+  const categories = ["All", "Woodland Adventure", "Sports & Vitality", "STEM Discovery", "Music & Arts", "Early Years"];
 
   const filteredPhotos = selectedCategory === "All"
     ? schoolData.gallery
     : schoolData.gallery.filter((p) => p.category === selectedCategory);
 
   return (
-    <div style={{ paddingBottom: "5rem" }}>
+    <div style={{ paddingBottom: "6rem" }}>
       {/* Header */}
-      <section style={{ backgroundColor: "var(--surface-alt)", padding: "4rem 0 2.5rem", borderBottom: "1px solid var(--border)" }}>
-        <div className="container" style={{ textAlign: "center", maxWidth: "750px" }}>
-          <span style={{ color: "var(--accent)", fontWeight: 700, fontSize: "0.85rem", textTransform: "uppercase" }}>
-            Visual Tour
+      <section
+        style={{
+          backgroundColor: "#102f24",
+          color: "#ffffff",
+          padding: "5rem 0 3.5rem",
+          textAlign: "center",
+          position: "relative"
+        }}
+      >
+        <div className="container" style={{ maxWidth: "750px" }}>
+          <span className="section-tag" style={{ background: "rgba(255,255,255,0.15)", color: "var(--accent)" }}>
+            Visual Storytelling
           </span>
-          <h1 style={{ fontSize: "2.75rem", fontWeight: 800, color: "var(--primary)", marginTop: "0.5rem", marginBottom: "1rem" }}>
-            Campus Life & Memories
+          <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(2.35rem, 5vw, 3.5rem)", fontWeight: 900, marginTop: "0.5rem", marginBottom: "1rem" }}>
+            Campus Life in Action
           </h1>
-          <p style={{ fontSize: "1.1rem", color: "var(--text-muted)" }}>
-            Explore moments of triumph, scientific discovery, cultural expressions, and sportsmanship.
+          <p style={{ fontSize: "1.15rem", color: "#e2e8f0" }}>
+            Take a visual tour through our 45-acre parkland, STEM laboratories, equestrian fixtures, and music studios.
           </p>
         </div>
       </section>
 
-      <div className="container" style={{ marginTop: "3rem" }}>
-        {/* Category Filter Tabs */}
-        <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", flexWrap: "wrap", marginBottom: "2.5rem" }}>
+      <div className="container" style={{ marginTop: "3.5rem" }}>
+        {/* Category Filter Pills */}
+        <div style={{ display: "flex", justifyContent: "center", gap: "0.6rem", flexWrap: "wrap", marginBottom: "3rem" }}>
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className="btn"
+              className="btn btn-sm"
               style={{
                 borderRadius: "var(--radius-full)",
-                padding: "0.5rem 1.25rem",
-                minHeight: "40px",
+                padding: "0.6rem 1.4rem",
                 fontSize: "0.9rem",
+                fontWeight: 700,
                 backgroundColor: selectedCategory === cat ? "var(--primary)" : "var(--surface)",
                 color: selectedCategory === cat ? "#ffffff" : "var(--text)",
-                border: "1px solid",
-                borderColor: selectedCategory === cat ? "var(--primary)" : "var(--border)"
+                border: "1.5px solid",
+                borderColor: selectedCategory === cat ? "var(--primary)" : "var(--border)",
+                boxShadow: selectedCategory === cat ? "var(--shadow-md)" : "none"
               }}
             >
               {cat}
@@ -57,14 +66,15 @@ export default function GalleryPage() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
-            gap: "1.75rem"
+            gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))",
+            gap: "2rem"
           }}
         >
           {filteredPhotos.map((photo) => (
-            <div
+            <motion.div
               key={photo.id}
               onClick={() => setActivePhoto(photo)}
+              whileHover={{ y: -6 }}
               className="card card-hover"
               style={{
                 padding: 0,
@@ -74,7 +84,7 @@ export default function GalleryPage() {
                 flexDirection: "column"
               }}
             >
-              <div style={{ position: "relative", height: "240px", overflow: "hidden", backgroundColor: "#e2e8f0" }}>
+              <div style={{ position: "relative", height: "260px", overflow: "hidden", backgroundColor: "#e2e8f0" }}>
                 <img
                   src={photo.url}
                   alt={photo.title}
@@ -83,42 +93,42 @@ export default function GalleryPage() {
                     width: "100%",
                     height: "100%",
                     objectFit: "cover",
-                    transition: "transform 0.4s ease"
+                    transition: "transform 0.5s ease"
                   }}
-                  onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+                  onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.08)")}
                   onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1.0)")}
                 />
                 <span
                   style={{
                     position: "absolute",
-                    top: "12px",
-                    right: "12px",
-                    backgroundColor: "rgba(15, 23, 42, 0.75)",
+                    top: "14px",
+                    right: "14px",
+                    backgroundColor: "rgba(20, 56, 44, 0.85)",
                     color: "#ffffff",
-                    fontSize: "0.75rem",
+                    fontSize: "0.775rem",
                     fontWeight: 700,
-                    padding: "0.25rem 0.65rem",
+                    padding: "0.3rem 0.8rem",
                     borderRadius: "var(--radius-full)",
-                    backdropFilter: "blur(4px)"
+                    backdropFilter: "blur(6px)"
                   }}
                 >
                   {photo.category}
                 </span>
               </div>
-              <div style={{ padding: "1.25rem" }}>
-                <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--primary)", marginBottom: "0.4rem" }}>
+              <div style={{ padding: "1.5rem" }}>
+                <h3 style={{ fontSize: "1.2rem", color: "var(--primary)", marginBottom: "0.4rem" }}>
                   {photo.title}
                 </h3>
-                <p style={{ fontSize: "0.875rem", color: "var(--text-muted)", lineHeight: 1.5 }}>
+                <p style={{ fontSize: "0.9rem", color: "var(--text-muted)", lineHeight: 1.6 }}>
                   {photo.caption}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
 
-      {/* Lightbox Modal with Framer Motion Scale & Fade */}
+      {/* Lightbox Modal */}
       <AnimatePresence>
         {activePhoto && (
           <div
@@ -147,19 +157,19 @@ export default function GalleryPage() {
                 left: 0,
                 width: "100%",
                 height: "100%",
-                backgroundColor: "rgba(15, 23, 42, 0.85)",
-                backdropFilter: "blur(6px)"
+                backgroundColor: "rgba(10, 26, 20, 0.88)",
+                backdropFilter: "blur(8px)"
               }}
             />
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 10 }}
+              initial={{ opacity: 0, scale: 0.9, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 10 }}
+              exit={{ opacity: 0, scale: 0.9, y: 15 }}
               transition={{ duration: 0.35, ease: "easeOut" }}
               style={{
                 position: "relative",
-                maxWidth: "800px",
+                maxWidth: "880px",
                 width: "100%",
                 backgroundColor: "var(--surface)",
                 borderRadius: "var(--radius-lg)",
@@ -168,24 +178,24 @@ export default function GalleryPage() {
                 zIndex: 1001
               }}
             >
-              <div style={{ position: "relative", maxHeight: "65vh", backgroundColor: "#000" }}>
+              <div style={{ position: "relative", maxHeight: "68vh", backgroundColor: "#000" }}>
                 <img
                   src={activePhoto.url}
                   alt={activePhoto.title}
-                  style={{ width: "100%", height: "auto", maxHeight: "65vh", objectFit: "contain", display: "block" }}
+                  style={{ width: "100%", height: "auto", maxHeight: "68vh", objectFit: "contain", display: "block" }}
                 />
                 <button
                   onClick={() => setActivePhoto(null)}
                   style={{
                     position: "absolute",
-                    top: "12px",
-                    right: "12px",
-                    width: "36px",
-                    height: "36px",
+                    top: "14px",
+                    right: "14px",
+                    width: "40px",
+                    height: "40px",
                     borderRadius: "50%",
                     backgroundColor: "rgba(0,0,0,0.6)",
                     color: "#ffffff",
-                    fontSize: "1.25rem",
+                    fontSize: "1.3rem",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center"
@@ -194,12 +204,12 @@ export default function GalleryPage() {
                   ✕
                 </button>
               </div>
-              <div style={{ padding: "1.5rem" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.35rem" }}>
+              <div style={{ padding: "1.75rem" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.5rem" }}>
                   <span className="badge badge-active">{activePhoto.category}</span>
-                  <h3 style={{ fontSize: "1.3rem", fontWeight: 700, color: "var(--primary)" }}>{activePhoto.title}</h3>
+                  <h3 style={{ fontSize: "1.45rem", color: "var(--primary)" }}>{activePhoto.title}</h3>
                 </div>
-                <p style={{ color: "var(--text-muted)", fontSize: "0.95rem" }}>{activePhoto.caption}</p>
+                <p style={{ color: "var(--text-muted)", fontSize: "1rem", lineHeight: 1.6 }}>{activePhoto.caption}</p>
               </div>
             </motion.div>
           </div>
@@ -208,4 +218,3 @@ export default function GalleryPage() {
     </div>
   );
 }
-

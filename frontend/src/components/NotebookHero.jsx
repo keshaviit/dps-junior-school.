@@ -1,253 +1,314 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { schoolData } from "../data/school";
 
 export default function NotebookHero() {
-  const lineVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: (custom) => ({
-      opacity: 1,
-      x: 0,
-      transition: {
-        delay: 0.25 + custom * 0.16,
-        duration: 0.55,
-        ease: "easeOut"
-      }
-    })
-  };
+  const [videoModalOpen, setVideoModalOpen] = useState(false);
 
   return (
-    <section style={{ padding: "3rem 0 4.5rem", backgroundColor: "var(--bg)", position: "relative", overflow: "hidden" }}>
-      {/* Decorative Background Elements */}
+    <section
+      style={{
+        position: "relative",
+        minHeight: "88vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#0d241c",
+        overflow: "hidden",
+        color: "#ffffff"
+      }}
+    >
+      {/* Background Visual with Parallax / Motion Zoom */}
       <motion.div
-        animate={{ scale: [1, 1.08, 1], rotate: [0, 90, 0] }}
-        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+        initial={{ scale: 1.15, opacity: 0.6 }}
+        animate={{ scale: 1, opacity: 0.75 }}
+        transition={{ duration: 1.8, ease: "easeOut" }}
         style={{
           position: "absolute",
-          top: "-100px",
-          right: "-100px",
-          width: "350px",
-          height: "350px",
-          borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, rgba(255,255,255,0) 70%)",
-          zIndex: 0
-        }}
-      />
-      <motion.div
-        animate={{ scale: [1, 1.12, 1], rotate: [0, -90, 0] }}
-        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-        style={{
-          position: "absolute",
-          bottom: "-80px",
-          left: "-80px",
-          width: "300px",
-          height: "300px",
-          borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(245, 158, 11, 0.12) 0%, rgba(255,255,255,0) 70%)",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          backgroundImage: `url("https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1920&q=85")`,
+          backgroundSize: "cover",
+          backgroundPosition: "center 30%",
           zIndex: 0
         }}
       />
 
-      <div className="container" style={{ position: "relative", zIndex: 1 }}>
-        <div
-          className="notebook-page"
-          style={{
-            padding: "3.75rem 2.25rem 3.75rem 5.5rem",
-            minHeight: "500px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            position: "relative"
-          }}
+      {/* Cinematic Gradient Overlays (Great Walstead style) */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          background: "linear-gradient(180deg, rgba(13, 36, 28, 0.7) 0%, rgba(13, 36, 28, 0.45) 45%, rgba(13, 36, 28, 0.95) 100%)",
+          zIndex: 1
+        }}
+      />
+
+      {/* Hero Content */}
+      <div className="container" style={{ position: "relative", zIndex: 2, padding: "5rem 1.5rem", textAlign: "center" }}>
+        {/* Floating Accolade Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          style={{ display: "inline-block", marginBottom: "1.5rem" }}
         >
-          {/* Notebook Spiral / Binder Punch Holes on Far Left */}
           <div
             style={{
-              position: "absolute",
-              top: 0,
-              bottom: 0,
-              left: "14px",
-              width: "20px",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-around",
+              display: "inline-flex",
               alignItems: "center",
-              zIndex: 3
+              gap: "0.6rem",
+              padding: "0.45rem 1.25rem",
+              borderRadius: "var(--radius-full)",
+              background: "rgba(255, 255, 255, 0.15)",
+              backdropFilter: "blur(12px)",
+              border: "1px solid rgba(255, 255, 255, 0.3)",
+              fontSize: "0.85rem",
+              fontWeight: 700,
+              color: "var(--accent)"
             }}
           >
-            {[...Array(9)].map((_, i) => (
-              <div
-                key={i}
-                style={{
-                  width: "12px",
-                  height: "12px",
-                  borderRadius: "50%",
-                  backgroundColor: "#cbd5e1",
-                  boxShadow: "inset 0 1px 3px rgba(0,0,0,0.3)"
-                }}
-              />
-            ))}
+            <span>🏆</span>
+            <span style={{ color: "#ffffff" }}>{schoolData.awardBadge}</span>
           </div>
+        </motion.div>
 
-          {/* Animated Red Ruled Margin Line */}
-          <motion.div
-            initial={{ height: 0 }}
-            animate={{ height: "100%" }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
-            style={{
-              position: "absolute",
-              top: 0,
-              left: "56px",
-              width: "2px",
-              backgroundColor: "#ef4444",
-              boxShadow: "1px 0 0 rgba(239, 68, 68, 0.3)",
-              zIndex: 2
-            }}
-          />
+        {/* Grand Headline */}
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+          style={{
+            fontFamily: "var(--font-serif)",
+            fontSize: "clamp(2.5rem, 6.5vw, 4.75rem)",
+            fontWeight: 800,
+            lineHeight: 1.1,
+            color: "#ffffff",
+            maxWidth: "1000px",
+            margin: "0 auto 1.5rem",
+            textShadow: "0 2px 20px rgba(0,0,0,0.3)"
+          }}
+        >
+          Where Every Day is an <span style={{ color: "var(--accent)", fontStyle: "italic" }}>Adventure</span> in Learning.
+        </motion.h1>
 
-          {/* Floating Pencil Icon animation */}
-          <motion.div
-            animate={{
-              y: [0, -8, 0],
-              rotate: [0, 4, -4, 0]
-            }}
-            transition={{
-              duration: 3.5,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            style={{
-              position: "absolute",
-              top: "24px",
-              right: "28px",
-              fontSize: "2.5rem",
-              filter: "drop-shadow(0 4px 6px rgba(0,0,0,0.1))"
-            }}
-          >
-            ✏️
-          </motion.div>
+        {/* Subtitle */}
+        <motion.p
+          initial={{ opacity: 0, y: 25 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
+          style={{
+            fontSize: "clamp(1.1rem, 2.2vw, 1.45rem)",
+            color: "#f1f5f9",
+            maxWidth: "760px",
+            margin: "0 auto 2.75rem",
+            lineHeight: 1.6,
+            fontWeight: 400
+          }}
+        >
+          {schoolData.name} provides an extraordinary independent prep school education set within {schoolData.campusSize}. We cultivate confident, kind, and deeply inquisitive young learners.
+        </motion.p>
 
-          {/* Top Pill Badge */}
-          <motion.div
-            custom={0}
-            initial="hidden"
-            animate="visible"
-            variants={lineVariants}
-            style={{ marginBottom: "1rem" }}
-          >
-            <span
+        {/* Action Buttons & Film Trigger */}
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "1.25rem",
+            flexWrap: "wrap"
+          }}
+        >
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Link
+              to="/contact"
+              className="btn btn-accent"
               style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                padding: "0.4rem 1rem",
-                borderRadius: "var(--radius-full)",
-                backgroundColor: "var(--primary-soft)",
-                color: "var(--primary)",
-                fontWeight: 800,
-                fontSize: "0.85rem",
-                letterSpacing: "0.04em",
-                textTransform: "uppercase",
-                border: "1px solid rgba(59, 130, 246, 0.2)"
+                padding: "1rem 2.25rem",
+                fontSize: "1.05rem",
+                boxShadow: "0 10px 25px -4px rgba(216, 150, 37, 0.5)"
               }}
             >
-              <span>⭐</span> Welcome to DPS Junior Public School
-            </span>
+              Book a Personal Visit →
+            </Link>
           </motion.div>
 
-          {/* School Name - Animated line by line */}
-          <motion.h1
-            custom={1}
-            initial="hidden"
-            animate="visible"
-            variants={lineVariants}
-            style={{
-              fontSize: "clamp(2.1rem, 5.5vw, 3.5rem)",
-              fontWeight: 900,
-              color: "var(--primary)",
-              lineHeight: 1.15,
-              marginBottom: "1rem",
-              letterSpacing: "-0.025em"
-            }}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setVideoModalOpen(true)}
+            className="btn btn-outline-white"
+            style={{ padding: "1rem 2rem", fontSize: "1rem" }}
           >
-            {schoolData.name}
-          </motion.h1>
+            <span style={{ fontSize: "1.2rem", color: "var(--accent)" }}>▶</span> Watch Campus Film
+          </motion.button>
+        </motion.div>
 
-          {/* Tagline */}
-          <motion.p
-            custom={2}
-            initial="hidden"
-            animate="visible"
-            variants={lineVariants}
+        {/* Quick Highlights Bar under Hero */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1 }}
+          style={{
+            marginTop: "4.5rem",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+            gap: "1.25rem",
+            maxWidth: "1000px",
+            margin: "4.5rem auto 0"
+          }}
+        >
+          <div
             style={{
-              fontSize: "clamp(1.1rem, 2.5vw, 1.4rem)",
-              color: "var(--text)",
-              fontWeight: 600,
-              maxWidth: "760px",
-              marginBottom: "1.75rem",
-              lineHeight: 1.6
-            }}
-          >
-            {schoolData.tagline}
-          </motion.p>
-
-          {/* Key Value Props with Animated Icons */}
-          <motion.div
-            custom={3}
-            initial="hidden"
-            animate="visible"
-            variants={lineVariants}
-            style={{
+              padding: "1rem 1.25rem",
+              borderRadius: "var(--radius-md)",
+              backgroundColor: "rgba(255, 255, 255, 0.1)",
+              backdropFilter: "blur(10px)",
+              border: "1px solid rgba(255, 255, 255, 0.15)",
+              textAlign: "left",
               display: "flex",
-              flexWrap: "wrap",
-              gap: "1.5rem",
-              marginBottom: "2.5rem"
+              alignItems: "center",
+              gap: "0.85rem"
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.95rem", color: "var(--text-muted)", fontWeight: 600 }}>
-              <span style={{ color: "var(--success)", fontSize: "1.1rem" }}>✓</span> Activity-Based CBSE Pedagogy
+            <span style={{ fontSize: "1.75rem" }}>🌲</span>
+            <div>
+              <div style={{ fontWeight: 800, fontSize: "0.95rem" }}>Forest School Days</div>
+              <div style={{ fontSize: "0.8rem", color: "#cbd5e1" }}>Hands-on outdoor science & nature</div>
             </div>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.95rem", color: "var(--text-muted)", fontWeight: 600 }}>
-              <span style={{ color: "var(--success)", fontSize: "1.1rem" }}>✓</span> Junior STEM & Robotics Labs
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.95rem", color: "var(--success)", fontWeight: 600 }}>
-              <span style={{ fontSize: "1.1rem" }}>✓</span> Real-Time Digital Attendance Portal
-            </div>
-          </motion.div>
+          </div>
 
-          {/* Call to action buttons */}
-          <motion.div
-            custom={4}
-            initial="hidden"
-            animate="visible"
-            variants={lineVariants}
+          <div
             style={{
+              padding: "1rem 1.25rem",
+              borderRadius: "var(--radius-md)",
+              backgroundColor: "rgba(255, 255, 255, 0.1)",
+              backdropFilter: "blur(10px)",
+              border: "1px solid rgba(255, 255, 255, 0.15)",
+              textAlign: "left",
               display: "flex",
-              flexWrap: "wrap",
-              gap: "1rem"
+              alignItems: "center",
+              gap: "0.85rem"
             }}
           >
-            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
-              <Link to="/about" className="btn btn-primary" style={{ padding: "0.9rem 1.85rem", fontSize: "1rem" }}>
-                Explore Our Story →
-              </Link>
-            </motion.div>
+            <span style={{ fontSize: "1.75rem" }}>💡</span>
+            <div>
+              <div style={{ fontWeight: 800, fontSize: "0.95rem" }}>Junior STEM Labs</div>
+              <div style={{ fontSize: "0.8rem", color: "#cbd5e1" }}>Robotics, coding & electronics</div>
+            </div>
+          </div>
 
-            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
-              <Link to="/contact" className="btn btn-secondary" style={{ padding: "0.9rem 1.85rem", fontSize: "1rem" }}>
-                Admissions 2027-28
-              </Link>
-            </motion.div>
-
-            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
-              <Link to="/login" className="btn btn-accent" style={{ padding: "0.9rem 1.6rem", fontSize: "1rem" }}>
-                Faculty & Admin Portal 🔐
-              </Link>
-            </motion.div>
-          </motion.div>
-        </div>
+          <div
+            style={{
+              padding: "1rem 1.25rem",
+              borderRadius: "var(--radius-md)",
+              backgroundColor: "rgba(255, 255, 255, 0.1)",
+              backdropFilter: "blur(10px)",
+              border: "1px solid rgba(255, 255, 255, 0.15)",
+              textAlign: "left",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.85rem"
+            }}
+          >
+            <span style={{ fontSize: "1.75rem" }}>🏊</span>
+            <div>
+              <div style={{ fontWeight: 800, fontSize: "0.95rem" }}>Aquatics & Sports</div>
+              <div style={{ fontSize: "0.8rem", color: "#cbd5e1" }}>25m heated pool & fixture matches</div>
+            </div>
+          </div>
+        </motion.div>
       </div>
+
+      {/* Video Modal Popup */}
+      <AnimatePresence>
+        {videoModalOpen && (
+          <div
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              zIndex: 1000,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "1.5rem"
+            }}
+          >
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setVideoModalOpen(false)}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                backgroundColor: "rgba(10, 20, 16, 0.88)",
+                backdropFilter: "blur(10px)"
+              }}
+            />
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              style={{
+                position: "relative",
+                width: "100%",
+                maxWidth: "860px",
+                backgroundColor: "#000",
+                borderRadius: "var(--radius-lg)",
+                overflow: "hidden",
+                boxShadow: "var(--shadow-xl)",
+                zIndex: 1001
+              }}
+            >
+              <div style={{ position: "relative", paddingTop: "56.25%" }}>
+                <iframe
+                  title="School Tour Video"
+                  src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1"
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    border: 0
+                  }}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+              <div style={{ padding: "1.25rem 1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "var(--primary)" }}>
+                <div>
+                  <h4 style={{ color: "#ffffff", fontWeight: 700 }}>DPS Junior Public School • Campus Adventure Tour</h4>
+                  <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.85rem" }}>Step inside a typical joyful day in our 45-acre parkland</p>
+                </div>
+                <button
+                  onClick={() => setVideoModalOpen(false)}
+                  className="btn btn-secondary btn-sm"
+                >
+                  ✕ Close Film
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

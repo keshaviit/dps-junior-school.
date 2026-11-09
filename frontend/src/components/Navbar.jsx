@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { schoolData } from "../data/school";
 
 export default function Navbar() {
@@ -9,10 +9,10 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "Home", path: "/" },
-    { name: "About Us", path: "/about" },
-    { name: "Gallery", path: "/gallery" },
-    { name: "Notices", path: "/notices" },
-    { name: "Contact", path: "/contact" }
+    { name: "About & Ethos", path: "/about" },
+    { name: "Campus Life", path: "/gallery" },
+    { name: "News & Bulletins", path: "/notices" },
+    { name: "Admissions & Visit", path: "/contact" }
   ];
 
   const isActive = (path) => {
@@ -22,169 +22,235 @@ export default function Navbar() {
   };
 
   return (
-    <header
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 100,
-        backgroundColor: "rgba(255, 255, 255, 0.95)",
-        backdropFilter: "blur(10px)",
-        borderBottom: "1px solid var(--border)",
-        boxShadow: "0 4px 20px -2px rgba(0, 0, 0, 0.05)"
-      }}
-    >
-      <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "78px" }}>
-        {/* Brand */}
-        <Link to="/" style={{ display: "flex", alignItems: "center", gap: "0.85rem" }}>
-          <motion.div
-            whileHover={{ scale: 1.08, rotate: [0, -5, 5, 0] }}
-            transition={{ duration: 0.4 }}
-            style={{
-              width: "48px",
-              height: "48px",
-              borderRadius: "14px",
-              background: "linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "#ffffff",
-              fontWeight: 900,
-              fontSize: "1.15rem",
-              letterSpacing: "0.05em",
-              boxShadow: "0 8px 16px -4px rgba(30, 64, 175, 0.35)",
-              border: "2px solid rgba(255,255,255,0.4)"
-            }}
-          >
-            DPS
-          </motion.div>
-          <div>
-            <div style={{ fontWeight: 800, fontSize: "1.15rem", color: "var(--primary)", lineHeight: 1.2 }}>
-              {schoolData.name}
-            </div>
-            <div style={{ fontSize: "0.75rem", color: "var(--accent)", fontWeight: 700, letterSpacing: "0.03em" }}>
-              CBSE Affiliation No. 2130894 • Est. {schoolData.established}
-            </div>
-          </div>
-        </Link>
-
-        {/* Desktop Nav */}
-        <nav style={{ display: "flex", alignItems: "center", gap: "1.75rem" }} className="desktop-nav">
-          <div style={{ display: "flex", gap: "0.4rem" }}>
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                style={{
-                  position: "relative",
-                  padding: "0.6rem 0.95rem",
-                  fontSize: "0.95rem",
-                  fontWeight: 600,
-                  borderRadius: "var(--radius-md)",
-                  color: isActive(link.path) ? "var(--primary)" : "var(--text-muted)",
-                  backgroundColor: isActive(link.path) ? "var(--primary-soft)" : "transparent",
-                  transition: "all 0.2s ease"
-                }}
-              >
-                {link.name}
-                {isActive(link.path) && (
-                  <motion.div
-                    layoutId="activeNavIndicator"
-                    style={{
-                      position: "absolute",
-                      bottom: "2px",
-                      left: "15%",
-                      width: "70%",
-                      height: "3px",
-                      backgroundColor: "var(--primary)",
-                      borderRadius: "2px"
-                    }}
-                  />
-                )}
-              </Link>
-            ))}
-          </div>
-
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Link
-              to="/login"
-              className="btn btn-primary"
-              style={{
-                fontSize: "0.9rem",
-                padding: "0.6rem 1.35rem",
-                borderRadius: "var(--radius-full)",
-                minHeight: "42px",
-                boxShadow: "0 4px 14px 0 rgba(30, 64, 175, 0.3)"
-              }}
-            >
-              <span>🔐</span> Portal Login
-            </Link>
-          </motion.div>
-        </nav>
-
-        {/* Mobile Hamburger Button */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle menu"
-          className="mobile-toggle"
+    <header style={{ position: "sticky", top: 0, zIndex: 100, backgroundColor: "#ffffff" }}>
+      {/* Top Announcement Bar (Great Walstead style) */}
+      <div
+        style={{
+          backgroundColor: "var(--primary)",
+          color: "#ffffff",
+          padding: "0.45rem 1rem",
+          fontSize: "0.825rem",
+          fontWeight: 600,
+          letterSpacing: "0.02em"
+        }}
+      >
+        <div
+          className="container"
           style={{
-            padding: "0.5rem",
-            fontSize: "1.6rem",
-            color: "var(--primary)"
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: "0.5rem"
           }}
         >
-          {mobileMenuOpen ? "✕" : "☰"}
-        </button>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <span style={{ color: "var(--accent)" }}>🍂</span>
+            <span><strong>Open Morning 2026:</strong> Book your private woodland campus tour</span>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "1.25rem", fontSize: "0.8rem" }}>
+            <a href={`tel:${schoolData.contact.phone}`} style={{ color: "rgba(255,255,255,0.9)", display: "flex", alignItems: "center", gap: "0.35rem" }}>
+              <span>📞</span> {schoolData.contact.phone}
+            </a>
+            <Link to="/contact" style={{ color: "var(--accent)", fontWeight: 700, textDecoration: "underline" }}>
+              Arrange a Visit →
+            </Link>
+          </div>
+        </div>
       </div>
 
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
+      {/* Main Navbar */}
+      <div
+        style={{
+          backgroundColor: "rgba(255, 255, 255, 0.95)",
+          backdropFilter: "blur(12px)",
+          borderBottom: "1px solid var(--border)",
+          boxShadow: "var(--shadow-sm)"
+        }}
+      >
+        <div
+          className="container"
           style={{
-            padding: "1rem 1.25rem 1.5rem",
-            backgroundColor: "var(--surface)",
-            borderBottom: "1px solid var(--border)",
             display: "flex",
-            flexDirection: "column",
-            gap: "0.75rem"
+            alignItems: "center",
+            justifyContent: "space-between",
+            height: "82px"
           }}
         >
-          {navLinks.map((link) => (
-            <Link
-              key={link.path}
-              to={link.path}
-              onClick={() => setMobileMenuOpen(false)}
+          {/* Brand Emblem */}
+          <Link to="/" style={{ display: "flex", alignItems: "center", gap: "0.95rem" }}>
+            <motion.div
+              whileHover={{ scale: 1.05, rotate: [0, -3, 3, 0] }}
+              transition={{ duration: 0.35 }}
               style={{
-                padding: "0.85rem 1rem",
-                borderRadius: "var(--radius-md)",
-                fontWeight: 600,
-                color: isActive(link.path) ? "var(--primary)" : "var(--text)",
-                backgroundColor: isActive(link.path) ? "var(--primary-soft)" : "transparent"
+                width: "50px",
+                height: "50px",
+                borderRadius: "14px",
+                background: "linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%)",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#ffffff",
+                boxShadow: "0 8px 18px -4px rgba(20, 56, 44, 0.35)",
+                border: "2px solid #ffffff"
               }}
             >
-              {link.name}
-            </Link>
-          ))}
-          <Link
-            to="/login"
-            onClick={() => setMobileMenuOpen(false)}
-            className="btn btn-primary"
-            style={{ width: "100%", marginTop: "0.5rem", padding: "0.85rem" }}
-          >
-            🔐 Staff & Teacher Portal Login
+              <span style={{ fontSize: "1.1rem", fontWeight: 900, lineHeight: 1 }}>DPS</span>
+              <span style={{ fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.08em", color: "var(--accent)" }}>JUNIOR</span>
+            </motion.div>
+            <div>
+              <div style={{ fontFamily: "var(--font-serif)", fontWeight: 800, fontSize: "1.25rem", color: "var(--primary)", lineHeight: 1.15 }}>
+                {schoolData.name}
+              </div>
+              <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", fontWeight: 600, letterSpacing: "0.02em" }}>
+                Independent Prep & Nursery • Est. {schoolData.established}
+              </div>
+            </div>
           </Link>
-        </motion.div>
-      )}
+
+          {/* Desktop Nav Links */}
+          <nav style={{ display: "flex", alignItems: "center", gap: "1.5rem" }} className="desktop-nav">
+            <div style={{ display: "flex", gap: "0.25rem" }}>
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  style={{
+                    position: "relative",
+                    padding: "0.65rem 1rem",
+                    fontSize: "0.95rem",
+                    fontWeight: 700,
+                    borderRadius: "var(--radius-full)",
+                    color: isActive(link.path) ? "var(--primary)" : "var(--text-muted)",
+                    backgroundColor: isActive(link.path) ? "var(--primary-soft)" : "transparent",
+                    transition: "all 0.2s ease"
+                  }}
+                >
+                  {link.name}
+                  {isActive(link.path) && (
+                    <motion.div
+                      layoutId="activeNavTab"
+                      style={{
+                        position: "absolute",
+                        bottom: "-6px",
+                        left: "25%",
+                        width: "50%",
+                        height: "3px",
+                        backgroundColor: "var(--accent)",
+                        borderRadius: "2px"
+                      }}
+                    />
+                  )}
+                </Link>
+              ))}
+            </div>
+
+            {/* Quick Action CTAs */}
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
+                <Link
+                  to="/contact"
+                  className="btn btn-accent btn-sm"
+                  style={{
+                    boxShadow: "0 4px 14px 0 rgba(216, 150, 37, 0.35)"
+                  }}
+                >
+                  Book a Visit
+                </Link>
+              </motion.div>
+
+              <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
+                <Link
+                  to="/login"
+                  className="btn btn-secondary btn-sm"
+                  style={{
+                    fontWeight: 700
+                  }}
+                >
+                  <span>🔐</span> Portal
+                </Link>
+              </motion.div>
+            </div>
+          </nav>
+
+          {/* Mobile Hamburger Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle navigation menu"
+            className="mobile-toggle"
+            style={{
+              padding: "0.6rem",
+              fontSize: "1.6rem",
+              color: "var(--primary)",
+              display: "none"
+            }}
+          >
+            {mobileMenuOpen ? "✕" : "☰"}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Drawer Navigation */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            style={{
+              backgroundColor: "var(--surface)",
+              borderBottom: "2px solid var(--border)",
+              boxShadow: "var(--shadow-lg)",
+              padding: "1.25rem 1.5rem 2rem"
+            }}
+          >
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", marginBottom: "1.5rem" }}>
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  onClick={() => setMobileMenuOpen(false)}
+                  style={{
+                    padding: "0.85rem 1.25rem",
+                    borderRadius: "var(--radius-md)",
+                    fontWeight: 700,
+                    fontSize: "1.05rem",
+                    color: isActive(link.path) ? "var(--primary)" : "var(--text)",
+                    backgroundColor: isActive(link.path) ? "var(--primary-soft)" : "transparent"
+                  }}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+              <Link
+                to="/contact"
+                onClick={() => setMobileMenuOpen(false)}
+                className="btn btn-accent"
+                style={{ width: "100%", justifyContent: "center" }}
+              >
+                Book a Personal Tour →
+              </Link>
+              <Link
+                to="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="btn btn-secondary"
+                style={{ width: "100%", justifyContent: "center" }}
+              >
+                🔐 Staff & Teacher Portal Login
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <style>{`
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
           .desktop-nav { display: none !important; }
           .mobile-toggle { display: block !important; }
-        }
-        @media (min-width: 769px) {
-          .mobile-toggle { display: none !important; }
         }
       `}</style>
     </header>
