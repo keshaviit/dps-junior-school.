@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # ==========================================================
-# DPS Junior Public School - One-Click Local Runner
+# DPS JUNIOR PUBLIC SCHOOL - One-Click Local Runner
 # ==========================================================
 
 echo "=========================================================="
-echo "  Starting DPS Junior Public School (Frontend + Backend)  "
+echo "    Starting DPS JUNIOR PUBLIC SCHOOL (Frontend + Backend) "
 echo "=========================================================="
 
 PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"

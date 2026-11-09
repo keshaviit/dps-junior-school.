@@ -1,205 +1,763 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import CountUp from "react-countup";
-import { schoolData } from "../data/school";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  ArrowRight,
+  HeartIcon,
+  LeafIcon,
+  SparklesIcon,
+  SunnyIcon,
+  SchoolIcon
+} from "../components/Icons";
+
+const palette = {
+  paper: "#FDFCF8",
+  ink: "#292524",
+  muted: "#78716C",
+  coral: "#FFB7B2",
+  coralDark: "#9C514E",
+  blush: "#FFE4E1",
+  sage: "#E8EFE8",
+  lavender: "#EFEDF4",
+  sunshine: "#F8D97A",
+  sky: "#CFE8F3",
+  line: "#E7E5E4",
+  white: "#FFFFFF",
+};
 
 export default function AboutPage() {
+  const location = useLocation();
+
+  // Scroll to hash if URL contains #book-visit
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace("#", "");
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) {
+          const top = el.getBoundingClientRect().top + window.scrollY - 86;
+          window.scrollTo({ top, behavior: "smooth" });
+        }
+      }, 150);
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [location]);
+
+  // Complete Visit Booking Form State
+  const [formData, setFormData] = useState({
+    childName: "",
+    childAge: "4",
+    program: "seedlings",
+    parentName: "",
+    email: "",
+    phone: "",
+    visitDate: "",
+    sessionTime: "morning",
+    referral: "word-of-mouth",
+    notes: ""
+  });
+
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [formError, setFormError] = useState("");
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormError("");
+  };
+
+  const handleBookingSubmit = (e) => {
+    e.preventDefault();
+    if (!formData.childName.trim() || !formData.parentName.trim() || !formData.email.trim() || !formData.phone.trim()) {
+      setFormError("Please fill out all required fields marked with *.");
+      return;
+    }
+
+    setSubmitting(true);
+    setTimeout(() => {
+      setSubmitting(false);
+      setFormSubmitted(true);
+    }, 600);
+  };
+
   return (
-    <div style={{ paddingBottom: "5rem" }}>
-      {/* Header Banner */}
-      <section
-        style={{
-          backgroundColor: "#102f24",
-          color: "#ffffff",
-          padding: "6rem 0 4rem",
-          textAlign: "center",
-          position: "relative",
-          overflow: "hidden"
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundImage: `url("https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1800&q=80")`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            opacity: 0.2
-          }}
-        />
-        <div className="container" style={{ position: "relative", zIndex: 1, maxWidth: "800px" }}>
-          <span className="section-tag" style={{ background: "rgba(255,255,255,0.15)", color: "var(--accent)" }}>
-            Our Ethos & Heritage
-          </span>
-          <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(2.5rem, 5vw, 3.75rem)", fontWeight: 900, marginTop: "0.5rem", marginBottom: "1.25rem" }}>
-            An Adventure in Learning
-          </h1>
-          <p style={{ fontSize: "1.2rem", color: "#e2e8f0", lineHeight: 1.7 }}>
-            Founded in {schoolData.established}, {schoolData.name} champions an idyllic prep school education where childhood is cherished and curiosity is ignited every single day.
-          </p>
+    <div style={{ backgroundColor: palette.paper, minHeight: "100vh", paddingTop: "110px", paddingBottom: "80px" }}>
+      {/* 1. HERO BANNER */}
+      <section style={{ padding: "60px 0 70px", position: "relative", textAlign: "center" }}>
+        <div className="container" style={{ maxWidth: "860px", position: "relative", zIndex: 10 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px",
+              backgroundColor: "rgba(255, 255, 255, 0.8)",
+              padding: "7px 16px",
+              borderRadius: "20px",
+              border: "1px solid var(--palette-line)",
+              marginBottom: "20px"
+            }}
+          >
+            <div style={{ width: "7px", height: "7px", borderRadius: "50%", backgroundColor: palette.coralDark }} />
+            <span style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "1.5px", color: palette.coralDark, textTransform: "uppercase" }}>
+              Our Story & Ethos
+            </span>
+          </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            style={{
+              fontFamily: "var(--font-sans)",
+              fontWeight: 500,
+              color: palette.ink,
+              fontSize: "clamp(42px, 5.8vw, 72px)",
+              lineHeight: 1.08,
+              letterSpacing: "-2px"
+            }}
+          >
+            Where childhood is <br />
+            <span className="script-hero">cherished.</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            style={{
+              fontFamily: "var(--font-sans)",
+              fontSize: "19px",
+              lineHeight: "30px",
+              color: palette.muted,
+              marginTop: "22px",
+              maxWidth: "680px",
+              marginLeft: "auto",
+              marginRight: "auto"
+            }}
+          >
+            DPS JUNIOR PUBLIC SCHOOL was founded on a simple, enduring conviction: childhood is not a race to rush through, but an adventure to live with wide-eyed curiosity, dirty hands, and abundant joy.
+          </motion.p>
         </div>
       </section>
 
-      {/* Stats Counter Bar */}
-      <section style={{ backgroundColor: "var(--primary)", color: "#ffffff", padding: "2.75rem 0" }}>
+      {/* 2. THREE GUIDING PILLARS */}
+      <section style={{ padding: "40px 0 80px" }}>
         <div className="container">
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-              gap: "2rem",
-              textAlign: "center"
+              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+              gap: "28px"
             }}
           >
-            {schoolData.stats.map((st, i) => (
-              <div key={i}>
-                <div style={{ fontFamily: "var(--font-serif)", fontSize: "2.75rem", fontWeight: 900, color: "var(--accent)", lineHeight: 1 }}>
-                  <CountUp end={st.value} duration={2.5} enableScrollSpy scrollSpyOnce />
-                  <span>{st.suffix}</span>
+            {[
+              {
+                number: "01",
+                title: "Rhythm Over Rush",
+                desc: "We prioritize deep focus and reflective inquiry. Children are never rushed from one task to the next; they are given the time to linger, inspect, and truly master their questions.",
+                icon: SunnyIcon,
+                bg: palette.blush,
+                accent: palette.coralDark
+              },
+              {
+                number: "02",
+                title: "Nature as Co-Teacher",
+                desc: "Our woodlands, mud kitchens, and botany beds are daily classrooms. In all seasons, learners connect directly with living ecosystems, developing resilience and profound wonder.",
+                icon: LeafIcon,
+                bg: palette.sage,
+                accent: "#5F7B67"
+              },
+              {
+                number: "03",
+                title: "Known by Name & Heart",
+                desc: "With small groups of only 10 learners per mentor, every little individual is observed with devotion. Their unique spark, quirks, and passions shape the trajectory of each day.",
+                icon: HeartIcon,
+                bg: palette.lavender,
+                accent: "#776C9B"
+              }
+            ].map((pillar) => {
+              const Icon = pillar.icon;
+              return (
+                <div
+                  key={pillar.title}
+                  style={{
+                    backgroundColor: palette.white,
+                    borderRadius: "32px",
+                    padding: "36px 30px",
+                    border: "1px solid #F5F5F4",
+                    boxShadow: "0 6px 20px rgba(0,0,0,0.04)",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between"
+                  }}
+                >
+                  <div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
+                      <span style={{ fontFamily: "var(--font-script)", fontSize: "36px", color: pillar.accent }}>
+                        {pillar.number}
+                      </span>
+                      <div
+                        style={{
+                          width: "44px",
+                          height: "44px",
+                          borderRadius: "50%",
+                          backgroundColor: pillar.bg,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center"
+                        }}
+                      >
+                        <Icon size={22} color={pillar.accent} />
+                      </div>
+                    </div>
+                    <h3 style={{ fontSize: "22px", fontWeight: 600, color: palette.ink, letterSpacing: "-0.5px" }}>
+                      {pillar.title}
+                    </h3>
+                    <p style={{ fontSize: "15px", lineHeight: "24px", color: palette.muted, marginTop: "12px" }}>
+                      {pillar.desc}
+                    </p>
+                  </div>
                 </div>
-                <div style={{ fontSize: "0.95rem", color: "#e2e8f0", marginTop: "0.4rem", fontWeight: 600 }}>{st.label}</div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Headmaster's Welcome Card */}
-      <section className="section">
-        <div className="container">
-          <div className="card" style={{ padding: "3.5rem 2.5rem", maxWidth: "1050px", margin: "0 auto", boxShadow: "var(--shadow-xl)" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "3.5rem", alignItems: "center" }}>
-              <div style={{ textAlign: "center" }}>
-                <div
-                  style={{
-                    width: "220px",
-                    height: "220px",
-                    borderRadius: "28px",
-                    overflow: "hidden",
-                    margin: "0 auto 1.5rem",
-                    boxShadow: "var(--shadow-lg)",
-                    border: "4px solid #ffffff"
-                  }}
-                >
-                  <img
-                    src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80"
-                    alt={schoolData.principal.name}
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  />
-                </div>
-                <h3 style={{ fontFamily: "var(--font-serif)", fontSize: "1.45rem", color: "var(--primary)" }}>{schoolData.principal.name}</h3>
-                <p style={{ color: "var(--accent)", fontWeight: 700, fontSize: "0.95rem" }}>{schoolData.principal.title}</p>
-                <p style={{ color: "var(--text-muted)", fontSize: "0.85rem", marginTop: "0.35rem" }}>{schoolData.principal.qualification}</p>
+      {/* 3. HEAD OF SCHOOL MESSAGE */}
+      <section style={{ padding: "80px 0", backgroundColor: "#F7F4EE" }}>
+        <div className="container" style={{ maxWidth: "1060px" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+              gap: "50px",
+              alignItems: "center"
+            }}
+          >
+            {/* Portrait Frame */}
+            <div style={{ position: "relative" }}>
+              <div
+                style={{
+                  width: "100%",
+                  height: "420px",
+                  borderRadius: "40px",
+                  overflow: "hidden",
+                  boxShadow: "0 16px 36px rgba(0,0,0,0.08)",
+                  backgroundColor: palette.sage
+                }}
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80"
+                  alt="Dr. Arvind S. Sharma, Head of School"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
               </div>
 
-              <div>
-                <span className="section-tag">
-                  From the Headmaster
-                </span>
-                <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "2.1rem", color: "var(--primary)", marginTop: "0.5rem", marginBottom: "1.25rem" }}>
-                  “Where Joy and Academic Excellence Walk Hand in Hand”
-                </h2>
-                <p style={{ color: "var(--text)", fontSize: "1.05rem", lineHeight: 1.8, marginBottom: "1.25rem" }}>
-                  {schoolData.principal.message}
-                </p>
-                <p style={{ color: "var(--text-muted)", fontSize: "1rem", lineHeight: 1.7 }}>
-                  We invite every parent to visit our grounds, breathe in the fresh forest air, listen to the children laughing in our woodlands, and witness firsthand why DPS Junior is so special.
-                </p>
-                <div style={{ marginTop: "1.75rem" }}>
-                  <Link to="/contact" className="btn btn-accent">
-                    Book a Meeting with the Headmaster →
-                  </Link>
+              {/* Tape sticker effect */}
+              <div
+                style={{
+                  position: "absolute",
+                  left: "20px",
+                  bottom: "-15px",
+                  backgroundColor: "rgba(253, 252, 248, 0.96)",
+                  backdropFilter: "blur(8px)",
+                  padding: "14px 22px",
+                  borderRadius: "20px",
+                  boxShadow: "0 6px 18px rgba(0,0,0,0.08)"
+                }}
+              >
+                <div style={{ fontFamily: "var(--font-script)", fontSize: "24px", color: palette.ink, lineHeight: 1 }}>
+                  Dr. Arvind S. Sharma
                 </div>
+                <div style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "1.1px", color: palette.muted, marginTop: "4px" }}>
+                  HEAD OF SCHOOL & PEDAGOGY
+                </div>
+              </div>
+            </div>
+
+            {/* Note Quote */}
+            <div>
+              <div style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "1.8px", color: palette.coralDark, textTransform: "uppercase" }}>
+                A NOTE FROM OUR HEAD OF SCHOOL
+              </div>
+              <h2
+                style={{
+                  fontSize: "36px",
+                  fontWeight: 500,
+                  lineHeight: 1.18,
+                  letterSpacing: "-1px",
+                  color: palette.ink,
+                  marginTop: "14px"
+                }}
+              >
+                "We don't teach to tests; <br />
+                we teach to <span className="script-heading">spark lifelong joy."</span>
+              </h2>
+              <p style={{ fontSize: "16px", lineHeight: "27px", color: palette.muted, marginTop: "18px" }}>
+                Welcome to DPS JUNIOR PUBLIC SCHOOL. When families step onto our campus, they often tell us they feel an immediate sense of calm and breathing room.
+                That feeling is deliberate.
+              </p>
+              <p style={{ fontSize: "16px", lineHeight: "27px", color: palette.muted, marginTop: "14px" }}>
+                Our classrooms are filled with natural sunlight, tactile building blocks, paints, open-ended books, and botanical samples. Here, children learn math through weighing seeds, science through pond-dipping, and emotional courage through collaborative storytelling.
+              </p>
+              <div style={{ marginTop: "24px" }}>
+                <a
+                  href="#book-visit"
+                  className="pill-button pill-button-coral"
+                  style={{ display: "inline-flex" }}
+                >
+                  <span>Schedule a personal walk with the Head of School</span>
+                  <ArrowRight size={16} color={palette.ink} />
+                </a>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* The 3 Age Stages Detailed */}
-      <section className="section" style={{ backgroundColor: "var(--surface-alt)" }}>
-        <div className="container">
-          <div style={{ textAlign: "center", maxWidth: "750px", margin: "0 auto 3.5rem" }}>
-            <span className="section-tag">
-              🌱 Educational Pathways
-            </span>
-            <h2 className="section-title">The Three Pillars of Childhood</h2>
-            <p className="section-subtitle">
-              Every stage is developmentally tailored to provide confidence, joy, and individual scholastic achievement.
+      {/* 4. THE COMPLETE VISIT BOOKING FORM (CRITICAL REQUIREMENT) */}
+      <section
+        id="book-visit"
+        style={{
+          padding: "110px 0 90px",
+          position: "relative"
+        }}
+      >
+        <div className="container" style={{ maxWidth: "860px" }}>
+          {/* Header */}
+          <div style={{ textAlign: "center", marginBottom: "48px" }}>
+            <div
+              style={{
+                width: "56px",
+                height: "56px",
+                borderRadius: "20px",
+                backgroundColor: palette.ink,
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: "20px",
+                boxShadow: "0 6px 18px rgba(0,0,0,0.12)"
+              }}
+            >
+              <SchoolIcon size={26} color={palette.white} />
+            </div>
+
+            <div style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "1.8px", color: palette.coralDark, textTransform: "uppercase" }}>
+              COME SAY HELLO
+            </div>
+
+            <h2
+              style={{
+                fontSize: "clamp(34px, 4.5vw, 54px)",
+                fontWeight: 500,
+                letterSpacing: "-1.5px",
+                color: palette.ink,
+                marginTop: "12px",
+                lineHeight: 1.15
+              }}
+            >
+              Book a Visit & <span className="script-hero">Campus Tour.</span>
+            </h2>
+
+            <p style={{ fontSize: "16px", lineHeight: "26px", color: palette.muted, maxWidth: "600px", margin: "16px auto 0" }}>
+              Please complete this visit reservation form. Our admissions coordinator will confirm your preferred morning within 24 hours and prepare a personalized tour for your family.
             </p>
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
-            {schoolData.ageStages.map((stage, idx) => (
+          {/* Form Card */}
+          <div
+            style={{
+              backgroundColor: palette.white,
+              borderRadius: "36px",
+              padding: "44px 36px",
+              border: "1px solid #E7E5E4",
+              boxShadow: "0 12px 38px rgba(0,0,0,0.06)"
+            }}
+          >
+            {formSubmitted ? (
               <motion.div
-                key={stage.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="card"
-                style={{
-                  padding: "2.5rem",
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-                  gap: "2.5rem",
-                  alignItems: "center"
-                }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                style={{ textAlign: "center", padding: "40px 20px" }}
               >
-                <div style={{ order: idx % 2 === 1 ? 2 : 1 }}>
-                  <span className="badge badge-active" style={{ marginBottom: "0.75rem" }}>{stage.badge}</span>
-                  <h3 style={{ fontSize: "1.85rem", color: "var(--primary)", marginBottom: "0.5rem" }}>{stage.title}</h3>
-                  <h4 style={{ color: "var(--accent)", fontSize: "1.1rem", fontWeight: 700, marginBottom: "1rem" }}>{stage.subtitle}</h4>
-                  <p style={{ color: "var(--text-muted)", fontSize: "1rem", lineHeight: 1.7, marginBottom: "1.5rem" }}>
-                    {stage.description}
-                  </p>
-                  <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-                    {stage.highlights.map((h, i) => (
-                      <li key={i} style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontWeight: 600, fontSize: "0.925rem" }}>
-                        <span style={{ color: "var(--accent)" }}>✦</span> {h}
-                      </li>
-                    ))}
-                  </ul>
+                <div
+                  style={{
+                    width: "72px",
+                    height: "72px",
+                    borderRadius: "50%",
+                    backgroundColor: palette.sage,
+                    color: "#5F7B67",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginBottom: "20px"
+                  }}
+                >
+                  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#5F7B67" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
                 </div>
-                <div style={{ order: idx % 2 === 1 ? 1 : 2, borderRadius: "var(--radius-lg)", overflow: "hidden", height: "320px", boxShadow: "var(--shadow-md)" }}>
-                  <img src={stage.image} alt={stage.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                <h3 style={{ fontSize: "28px", fontWeight: 600, color: palette.ink, letterSpacing: "-0.5px" }}>
+                  Visit Reserved! We can't wait to meet you.
+                </h3>
+                <p style={{ fontSize: "16px", color: palette.muted, marginTop: "12px", maxWidth: "520px", margin: "12px auto 0", lineHeight: "26px" }}>
+                  Thank you, <strong>{formData.parentName}</strong>. We have received your tour request for <strong>{formData.childName}</strong>.
+                  A confirmation email and visitor guide have been sent to <strong>{formData.email}</strong>.
+                </p>
+                <div style={{ marginTop: "32px" }}>
+                  <button
+                    onClick={() => {
+                      setFormSubmitted(false);
+                      setFormData({
+                        childName: "",
+                        childAge: "4",
+                        program: "seedlings",
+                        parentName: "",
+                        email: "",
+                        phone: "",
+                        visitDate: "",
+                        sessionTime: "morning",
+                        referral: "word-of-mouth",
+                        notes: ""
+                      });
+                    }}
+                    className="pill-button pill-button-white"
+                  >
+                    <span>Book another tour date</span>
+                  </button>
                 </div>
               </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+            ) : (
+              <form onSubmit={handleBookingSubmit}>
+                {formError && (
+                  <div
+                    style={{
+                      backgroundColor: palette.blush,
+                      color: palette.coralDark,
+                      padding: "12px 18px",
+                      borderRadius: "14px",
+                      fontSize: "14px",
+                      fontWeight: 600,
+                      marginBottom: "24px"
+                    }}
+                  >
+                    {formError}
+                  </div>
+                )}
 
-      {/* Full Facilities Showcase */}
-      <section className="section">
-        <div className="container">
-          <div style={{ textAlign: "center", maxWidth: "750px", margin: "0 auto 3.5rem" }}>
-            <span className="section-tag">
-              🌳 Campus Exploration
-            </span>
-            <h2 className="section-title">Our 45-Acre Parkland Facilities</h2>
-            <p className="section-subtitle">
-              Immerse yourself in our specialist sports arenas, science laboratories, and natural learning spaces.
-            </p>
-          </div>
+                {/* Section A: Child Info */}
+                <div style={{ marginBottom: "28px" }}>
+                  <div style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "1.2px", color: palette.coralDark, textTransform: "uppercase", marginBottom: "14px" }}>
+                    1. Little Learner Information
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "18px" }}>
+                    <div>
+                      <label style={{ display: "block", fontSize: "13px", fontWeight: 600, color: palette.ink, marginBottom: "6px" }}>
+                        Child's Full Name *
+                      </label>
+                      <input
+                        type="text"
+                        name="childName"
+                        required
+                        value={formData.childName}
+                        onChange={handleChange}
+                        placeholder="e.g. Maya Sharma"
+                        style={{
+                          width: "100%",
+                          height: "48px",
+                          padding: "0 16px",
+                          borderRadius: "14px",
+                          border: "1px solid #E7E5E4",
+                          backgroundColor: "#FAFAF9",
+                          fontSize: "14px",
+                          color: palette.ink,
+                          outline: "none"
+                        }}
+                      />
+                    </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "2rem" }}>
-            {schoolData.facilities.map((fac, idx) => (
-              <div key={idx} className="card card-hover" style={{ padding: 0, overflow: "hidden" }}>
-                <div style={{ height: "220px" }}>
-                  <img src={fac.image} alt={fac.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    <div>
+                      <label style={{ display: "block", fontSize: "13px", fontWeight: 600, color: palette.ink, marginBottom: "6px" }}>
+                        Age of Child / Class
+                      </label>
+                      <select
+                        name="childAge"
+                        value={formData.childAge}
+                        onChange={handleChange}
+                        style={{
+                          width: "100%",
+                          height: "48px",
+                          padding: "0 16px",
+                          borderRadius: "14px",
+                          border: "1px solid #E7E5E4",
+                          backgroundColor: "#FAFAF9",
+                          fontSize: "14px",
+                          color: palette.ink,
+                          outline: "none"
+                        }}
+                      >
+                        <option value="playgroup">Age 2+ (Playgroup)</option>
+                        <option value="nursery">Age 3+ (Nursery)</option>
+                        <option value="lkg">Age 4+ (LKG / Lower KG)</option>
+                        <option value="ukg">Age 5+ (UKG / Upper KG)</option>
+                        <option value="class-1">Age 6+ (Class I / Grade 1)</option>
+                        <option value="class-2">Age 7+ (Class II / Grade 2)</option>
+                        <option value="class-3">Age 8+ (Class III / Grade 3)</option>
+                        <option value="class-4">Age 9+ (Class IV / Grade 4)</option>
+                        <option value="class-5">Age 10+ (Class V / Grade 5)</option>
+                        <option value="class-6">Age 11+ (Class VI / Grade 6)</option>
+                        <option value="class-7">Age 12+ (Class VII / Grade 7)</option>
+                        <option value="class-8">Age 13–14 (Class VIII / Grade 8)</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label style={{ display: "block", fontSize: "13px", fontWeight: 600, color: palette.ink, marginBottom: "6px" }}>
+                        Educational Wing (Play to 8)
+                      </label>
+                      <select
+                        name="program"
+                        value={formData.program}
+                        onChange={handleChange}
+                        style={{
+                          width: "100%",
+                          height: "48px",
+                          padding: "0 16px",
+                          borderRadius: "14px",
+                          border: "1px solid #E7E5E4",
+                          backgroundColor: "#FAFAF9",
+                          fontSize: "14px",
+                          color: palette.ink,
+                          outline: "none"
+                        }}
+                      >
+                        <option value="foundational">Foundational Wing (Playgroup to UKG)</option>
+                        <option value="primary">Primary Wing (Classes I to V)</option>
+                        <option value="middle">Middle Wing (Classes VI to VIII)</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
-                <div style={{ padding: "1.75rem" }}>
-                  <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>{fac.icon}</div>
-                  <h3 style={{ fontSize: "1.3rem", color: "var(--primary)", marginBottom: "0.5rem" }}>{fac.title}</h3>
-                  <p style={{ color: "var(--text-muted)", fontSize: "0.95rem", lineHeight: 1.6 }}>{fac.description}</p>
+
+                <div style={{ height: "1px", backgroundColor: palette.line, margin: "24px 0" }} />
+
+                {/* Section B: Parent Info */}
+                <div style={{ marginBottom: "28px" }}>
+                  <div style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "1.2px", color: palette.coralDark, textTransform: "uppercase", marginBottom: "14px" }}>
+                    2. Parent / Guardian Contact Details
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "18px" }}>
+                    <div>
+                      <label style={{ display: "block", fontSize: "13px", fontWeight: 600, color: palette.ink, marginBottom: "6px" }}>
+                        Your Full Name *
+                      </label>
+                      <input
+                        type="text"
+                        name="parentName"
+                        required
+                        value={formData.parentName}
+                        onChange={handleChange}
+                        placeholder="e.g. Sarah Sharma"
+                        style={{
+                          width: "100%",
+                          height: "48px",
+                          padding: "0 16px",
+                          borderRadius: "14px",
+                          border: "1px solid #E7E5E4",
+                          backgroundColor: "#FAFAF9",
+                          fontSize: "14px",
+                          color: palette.ink,
+                          outline: "none"
+                        }}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={{ display: "block", fontSize: "13px", fontWeight: 600, color: palette.ink, marginBottom: "6px" }}>
+                        Email Address *
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        required
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="e.g. sarah@example.com"
+                        style={{
+                          width: "100%",
+                          height: "48px",
+                          padding: "0 16px",
+                          borderRadius: "14px",
+                          border: "1px solid #E7E5E4",
+                          backgroundColor: "#FAFAF9",
+                          fontSize: "14px",
+                          color: palette.ink,
+                          outline: "none"
+                        }}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={{ display: "block", fontSize: "13px", fontWeight: 600, color: palette.ink, marginBottom: "6px" }}>
+                        Phone Number *
+                      </label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        required
+                        value={formData.phone}
+                        onChange={handleChange}
+                        placeholder="e.g. +1 (555) 019-2834"
+                        style={{
+                          width: "100%",
+                          height: "48px",
+                          padding: "0 16px",
+                          borderRadius: "14px",
+                          border: "1px solid #E7E5E4",
+                          backgroundColor: "#FAFAF9",
+                          fontSize: "14px",
+                          color: palette.ink,
+                          outline: "none"
+                        }}
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+
+                <div style={{ height: "1px", backgroundColor: palette.line, margin: "24px 0" }} />
+
+                {/* Section C: Visit Preferences */}
+                <div style={{ marginBottom: "28px" }}>
+                  <div style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "1.2px", color: palette.coralDark, textTransform: "uppercase", marginBottom: "14px" }}>
+                    3. Tour Day & Timing
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "18px" }}>
+                    <div>
+                      <label style={{ display: "block", fontSize: "13px", fontWeight: 600, color: palette.ink, marginBottom: "6px" }}>
+                        Preferred Tour Date *
+                      </label>
+                      <input
+                        type="date"
+                        name="visitDate"
+                        required
+                        value={formData.visitDate}
+                        onChange={handleChange}
+                        style={{
+                          width: "100%",
+                          height: "48px",
+                          padding: "0 16px",
+                          borderRadius: "14px",
+                          border: "1px solid #E7E5E4",
+                          backgroundColor: "#FAFAF9",
+                          fontSize: "14px",
+                          color: palette.ink,
+                          outline: "none"
+                        }}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={{ display: "block", fontSize: "13px", fontWeight: 600, color: palette.ink, marginBottom: "6px" }}>
+                        Preferred Session
+                      </label>
+                      <select
+                        name="sessionTime"
+                        value={formData.sessionTime}
+                        onChange={handleChange}
+                        style={{
+                          width: "100%",
+                          height: "48px",
+                          padding: "0 16px",
+                          borderRadius: "14px",
+                          border: "1px solid #E7E5E4",
+                          backgroundColor: "#FAFAF9",
+                          fontSize: "14px",
+                          color: palette.ink,
+                          outline: "none"
+                        }}
+                      >
+                        <option value="morning">Morning Open Studio (9:30 AM – 11:30 AM)</option>
+                        <option value="afternoon">Afternoon Discovery (1:30 PM – 3:30 PM)</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label style={{ display: "block", fontSize: "13px", fontWeight: 600, color: palette.ink, marginBottom: "6px" }}>
+                        How did you hear about us?
+                      </label>
+                      <select
+                        name="referral"
+                        value={formData.referral}
+                        onChange={handleChange}
+                        style={{
+                          width: "100%",
+                          height: "48px",
+                          padding: "0 16px",
+                          borderRadius: "14px",
+                          border: "1px solid #E7E5E4",
+                          backgroundColor: "#FAFAF9",
+                          fontSize: "14px",
+                          color: palette.ink,
+                          outline: "none"
+                        }}
+                      >
+                        <option value="word-of-mouth">Word of mouth / Family recommendation</option>
+                        <option value="social">Instagram / Social media</option>
+                        <option value="google">Search engine (Google)</option>
+                        <option value="event">Local community event</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Section D: Notes */}
+                <div style={{ marginBottom: "32px" }}>
+                  <label style={{ display: "block", fontSize: "13px", fontWeight: 600, color: palette.ink, marginBottom: "6px" }}>
+                    Anything special about your child you'd like us to know? (Optional)
+                  </label>
+                  <textarea
+                    name="notes"
+                    rows="3"
+                    value={formData.notes}
+                    onChange={handleChange}
+                    placeholder="e.g. Loves building with wooden blocks, outdoors bug exploration, shy in new groups..."
+                    style={{
+                      width: "100%",
+                      padding: "12px 16px",
+                      borderRadius: "14px",
+                      border: "1px solid #E7E5E4",
+                      backgroundColor: "#FAFAF9",
+                      fontSize: "14px",
+                      color: palette.ink,
+                      outline: "none",
+                      resize: "vertical"
+                    }}
+                  />
+                </div>
+
+                {/* Submit Button */}
+                <div style={{ textAlign: "center" }}>
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="pill-button pill-button-coral"
+                    style={{ minWidth: "260px", opacity: submitting ? 0.7 : 1 }}
+                  >
+                    <span>{submitting ? "Confirming..." : "Confirm My Family's Visit"}</span>
+                    <ArrowRight size={17} color={palette.ink} />
+                  </button>
+                  <div style={{ fontSize: "12px", color: "#A8A29E", marginTop: "12px" }}>
+                    Tours are complimentary. No application commitment required.
+                  </div>
+                </div>
+              </form>
+            )}
           </div>
         </div>
       </section>

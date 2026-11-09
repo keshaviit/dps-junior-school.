@@ -50,7 +50,7 @@ export default function AdminLayout() {
               fontSize: "1rem"
             }}
           >
-            SX
+            DPS
           </div>
           <div>
             <div style={{ fontWeight: 800, fontSize: "0.95rem" }}>{schoolData.shortName}</div>

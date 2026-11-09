@@ -1,285 +1,462 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { schoolData } from "../data/school";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { ArrowRight, LockIcon } from "./Icons";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Pure, calm navigation links (removed News, Bulletins, Campus Life)
-  const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "About & Ethos", path: "/about" },
-    { name: "Admissions & Visit", path: "/contact" }
-  ];
-
-  const isActive = (path) => {
-    if (path === "/" && location.pathname === "/") return true;
-    if (path !== "/" && location.pathname.startsWith(path)) return true;
-    return false;
+  const handleNavClick = (target) => {
+    setMobileMenuOpen(false);
+    if (target.startsWith("/")) {
+      if (target.includes("#")) {
+        const [path, hash] = target.split("#");
+        if (location.pathname === path) {
+          const el = document.getElementById(hash);
+          if (el) {
+            const top = el.getBoundingClientRect().top + window.scrollY - 86;
+            window.scrollTo({ top, behavior: "smooth" });
+          }
+        } else {
+          navigate(target);
+        }
+      } else {
+        navigate(target);
+      }
+    } else {
+      if (location.pathname === "/") {
+        const el = document.getElementById(target);
+        if (el) {
+          const top = el.getBoundingClientRect().top + window.scrollY - 86;
+          window.scrollTo({ top, behavior: "smooth" });
+        }
+      } else {
+        navigate(`/#${target}`);
+      }
+    }
   };
 
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace("#", "");
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) {
+          const top = el.getBoundingClientRect().top + window.scrollY - 86;
+          window.scrollTo({ top, behavior: "smooth" });
+        }
+      }, 120);
+    }
+  }, [location]);
+
+  const isActive = (path) => location.pathname === path && !location.hash;
+
   return (
-    <header
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 100,
-        backgroundColor: scrolled ? "rgba(255, 255, 255, 0.90)" : "rgba(255, 255, 255, 0.98)",
-        backdropFilter: "blur(20px) saturate(180%)",
-        WebkitBackdropFilter: "blur(20px) saturate(180%)",
-        borderBottom: scrolled ? "1px solid rgba(0, 0, 0, 0.06)" : "1px solid rgba(0, 0, 0, 0.03)",
-        boxShadow: scrolled ? "0 8px 24px -4px rgba(20, 56, 44, 0.05)" : "none",
-        transition: "background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease"
-      }}
-    >
-      {/* Calm, Refined Announcement Ribbon */}
-      <div
+    <>
+      <header
         style={{
-          backgroundColor: "var(--primary)",
-          color: "#ffffff",
-          padding: "0.35rem 1rem",
-          fontSize: "0.785rem",
-          fontWeight: 600,
-          letterSpacing: "0.02em",
-          transition: "all 0.3s ease"
+          position: "fixed",
+          top: "16px",
+          left: "16px",
+          right: "16px",
+          zIndex: 900,
+          display: "flex",
+          justifyContent: "center",
+          pointerEvents: "none"
         }}
       >
         <div
-          className="container"
           style={{
+            width: "100%",
+            maxWidth: "1060px",
+            height: "64px",
+            backgroundColor: "rgba(255, 255, 255, 0.90)",
+            backdropFilter: "blur(16px)",
+            WebkitBackdropFilter: "blur(16px)",
+            borderRadius: "32px",
+            padding: "0 10px 0 18px",
             display: "flex",
-            justifyContent: "space-between",
             alignItems: "center",
-            flexWrap: "wrap",
-            gap: "0.5rem"
+            justifyContent: "space-between",
+            border: "1px solid rgba(255, 255, 255, 0.95)",
+            boxShadow: "0 4px 24px rgba(0, 0, 0, 0.07)",
+            pointerEvents: "auto",
+            transition: "all 0.3s ease"
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <span style={{ color: "var(--accent)", fontSize: "0.7rem" }}>●</span>
-            <span>Admissions 2027–28 Open &bull; Personal Headmaster Morning Tours</span>
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "1.25rem", fontSize: "0.775rem" }}>
-            <a href={`tel:${schoolData.contact.phone}`} style={{ color: "rgba(255,255,255,0.85)", fontWeight: 500 }}>
-              📞 {schoolData.contact.phone}
-            </a>
-            <Link to="/contact" style={{ color: "var(--accent)", fontWeight: 700 }}>
-              Arrange Visit →
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Bar with Smooth Animated Height */}
-      <div
-        className="container"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          height: scrolled ? "66px" : "76px",
-          transition: "height 0.35s cubic-bezier(0.16, 1, 0.3, 1)"
-        }}
-      >
-        {/* Brand */}
-        <Link to="/" style={{ display: "flex", alignItems: "center", gap: "0.85rem" }}>
-          <div
+          {/* Brand Logo & Play to 8 Badge */}
+          <Link
+            to="/"
+            onClick={() => handleNavClick("/")}
             style={{
-              width: scrolled ? "40px" : "44px",
-              height: scrolled ? "40px" : "44px",
-              borderRadius: "12px",
-              background: "linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%)",
               display: "flex",
-              flexDirection: "column",
               alignItems: "center",
-              justifyContent: "center",
-              color: "#ffffff",
-              boxShadow: "0 4px 14px rgba(20, 56, 44, 0.18)",
-              transition: "all 0.35s cubic-bezier(0.16, 1, 0.3, 1)"
+              gap: "10px",
+              cursor: "pointer",
+              textDecoration: "none"
             }}
           >
-            <span style={{ fontSize: scrolled ? "0.95rem" : "1.05rem", fontWeight: 800, lineHeight: 1 }}>DPS</span>
-            <span style={{ fontSize: "0.48rem", fontWeight: 700, letterSpacing: "0.06em", color: "var(--accent)" }}>JUNIOR</span>
-          </div>
-          <div>
             <div
               style={{
-                fontFamily: "var(--font-serif)",
-                fontWeight: 800,
-                fontSize: scrolled ? "1.15rem" : "1.25rem",
-                color: "var(--primary)",
-                lineHeight: 1.15,
-                transition: "font-size 0.35s ease"
+                width: "34px",
+                height: "34px",
+                borderRadius: "50%",
+                backgroundColor: "var(--palette-coral)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0
               }}
             >
-              {schoolData.name}
+              <div
+                style={{
+                  width: "8px",
+                  height: "8px",
+                  borderRadius: "50%",
+                  backgroundColor: "var(--palette-white)"
+                }}
+              />
             </div>
-            <div style={{ fontSize: "0.725rem", color: "var(--text-muted)", fontWeight: 500 }}>
-              Independent Prep & Nursery
+            <div>
+              <div
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontWeight: 800,
+                  color: "var(--palette-ink)",
+                  fontSize: "17px",
+                  letterSpacing: "-0.4px",
+                  lineHeight: 1.1
+                }}
+              >
+                DPS JUNIOR
+              </div>
+              <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "0.8px", color: "var(--palette-coralDark)" }}>
+                PUBLIC SCHOOL · PLAY TO VIII
+              </div>
             </div>
-          </div>
-        </Link>
+          </Link>
 
-        {/* Clean Calm Desktop Navigation */}
-        <nav style={{ display: "flex", alignItems: "center", gap: "2.25rem" }} className="desktop-nav">
-          <div style={{ display: "flex", gap: "0.35rem" }}>
-            {navLinks.map((link) => {
-              const active = isActive(link.path);
-              return (
-                <Link
-                  key={link.path}
-                  to={link.path}
+          {/* Desktop Nav Links (Rearranged according to the actual site structure) */}
+          <nav
+            style={{
+              display: "none",
+              gap: "20px",
+              alignItems: "center"
+            }}
+            className="navbar-desktop-links"
+          >
+            {/* 1. Home */}
+            <button
+              onClick={() => handleNavClick("/")}
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontWeight: isActive("/") ? 700 : 500,
+                color: isActive("/") ? "var(--palette-ink)" : "var(--palette-muted)",
+                fontSize: "14px",
+                cursor: "pointer",
+                position: "relative",
+                transition: "color 0.15s ease"
+              }}
+              onMouseEnter={(e) => (e.target.style.color = "var(--palette-ink)")}
+              onMouseLeave={(e) => {
+                if (!isActive("/")) e.target.style.color = "var(--palette-muted)";
+              }}
+            >
+              Home
+              {isActive("/") && (
+                <span
                   style={{
-                    position: "relative",
-                    padding: "0.5rem 1rem",
-                    fontSize: "0.925rem",
-                    fontWeight: 600,
-                    borderRadius: "var(--radius-full)",
-                    color: active ? "var(--primary)" : "var(--text-muted)",
-                    backgroundColor: active ? "var(--primary-soft)" : "transparent",
-                    transition: "all 0.25s cubic-bezier(0.16, 1, 0.3, 1)"
+                    position: "absolute",
+                    bottom: "-4px",
+                    left: "0",
+                    right: "0",
+                    height: "2px",
+                    backgroundColor: "var(--palette-coralDark)",
+                    borderRadius: "1px"
                   }}
-                >
-                  {link.name}
-                  {active && (
-                    <motion.div
-                      layoutId="smoothActiveIndicator"
-                      style={{
-                        position: "absolute",
-                        bottom: "4px",
-                        left: "20%",
-                        width: "60%",
-                        height: "2px",
-                        backgroundColor: "var(--primary)",
-                        borderRadius: "2px"
-                      }}
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                </Link>
-              );
-            })}
+                />
+              )}
+            </button>
+
+            {/* 2. About Us */}
+            <button
+              onClick={() => handleNavClick("/about")}
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontWeight: isActive("/about") ? 700 : 500,
+                color: isActive("/about") ? "var(--palette-ink)" : "var(--palette-muted)",
+                fontSize: "14px",
+                cursor: "pointer",
+                position: "relative",
+                transition: "color 0.15s ease"
+              }}
+              onMouseEnter={(e) => (e.target.style.color = "var(--palette-ink)")}
+              onMouseLeave={(e) => {
+                if (!isActive("/about")) e.target.style.color = "var(--palette-muted)";
+              }}
+            >
+              About Us
+              {isActive("/about") && (
+                <span
+                  style={{
+                    position: "absolute",
+                    bottom: "-4px",
+                    left: "0",
+                    right: "0",
+                    height: "2px",
+                    backgroundColor: "var(--palette-coralDark)",
+                    borderRadius: "1px"
+                  }}
+                />
+              )}
+            </button>
+
+            {/* 3. Admissions */}
+            <button
+              onClick={() => handleNavClick("/admissions")}
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontWeight: isActive("/admissions") ? 700 : 500,
+                color: isActive("/admissions") ? "var(--palette-ink)" : "var(--palette-muted)",
+                fontSize: "14px",
+                cursor: "pointer",
+                position: "relative",
+                transition: "color 0.15s ease"
+              }}
+              onMouseEnter={(e) => (e.target.style.color = "var(--palette-ink)")}
+              onMouseLeave={(e) => {
+                if (!isActive("/admissions")) e.target.style.color = "var(--palette-muted)";
+              }}
+            >
+              Admissions
+              {isActive("/admissions") && (
+                <span
+                  style={{
+                    position: "absolute",
+                    bottom: "-4px",
+                    left: "0",
+                    right: "0",
+                    height: "2px",
+                    backgroundColor: "var(--palette-coralDark)",
+                    borderRadius: "1px"
+                  }}
+                />
+              )}
+            </button>
+
+            {/* 4. Contact Us */}
+            <button
+              onClick={() => handleNavClick("/contact")}
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontWeight: isActive("/contact") ? 700 : 500,
+                color: isActive("/contact") ? "var(--palette-ink)" : "var(--palette-muted)",
+                fontSize: "14px",
+                cursor: "pointer",
+                position: "relative",
+                transition: "color 0.15s ease"
+              }}
+              onMouseEnter={(e) => (e.target.style.color = "var(--palette-ink)")}
+              onMouseLeave={(e) => {
+                if (!isActive("/contact")) e.target.style.color = "var(--palette-muted)";
+              }}
+            >
+              Contact Us
+              {isActive("/contact") && (
+                <span
+                  style={{
+                    position: "absolute",
+                    bottom: "-4px",
+                    left: "0",
+                    right: "0",
+                    height: "2px",
+                    backgroundColor: "var(--palette-coralDark)",
+                    borderRadius: "1px"
+                  }}
+                />
+              )}
+            </button>
+          </nav>
+
+          {/* Right Action CTAs */}
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            {/* Book a visit CTA (lands on /about#book-visit) */}
+            <button
+              onClick={() => handleNavClick("/about#book-visit")}
+              style={{
+                backgroundColor: "var(--palette-coral)",
+                borderRadius: "22px",
+                height: "42px",
+                padding: "0 16px",
+                display: "inline-flex",
+                gap: "7px",
+                alignItems: "center",
+                color: "var(--palette-ink)",
+                fontFamily: "var(--font-sans)",
+                fontWeight: 600,
+                fontSize: "13px",
+                boxShadow: "0 2px 10px rgba(156, 81, 78, 0.15)",
+                cursor: "pointer",
+                transition: "transform 0.15s ease"
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.02)")}
+              onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+            >
+              <span>Book a Visit</span>
+              <ArrowRight size={14} color="var(--palette-ink)" />
+            </button>
+
+            {/* Staff Login Button */}
+            <Link
+              to="/login"
+              style={{
+                backgroundColor: "var(--palette-ink)",
+                borderRadius: "22px",
+                height: "42px",
+                padding: "0 16px",
+                display: "inline-flex",
+                gap: "7px",
+                alignItems: "center",
+                color: "var(--palette-white)",
+                fontFamily: "var(--font-sans)",
+                fontWeight: 600,
+                fontSize: "13px",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
+                textDecoration: "none",
+                cursor: "pointer",
+                transition: "all 0.15s ease"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "scale(1.02)";
+                e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.18)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "scale(1)";
+                e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.12)";
+              }}
+            >
+              <LockIcon size={14} color="var(--palette-white)" />
+              <span>Staff Login</span>
+            </Link>
+
+            {/* Mobile Hamburger Toggle */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="navbar-mobile-toggle"
+              aria-label="Toggle navigation menu"
+              style={{
+                width: "40px",
+                height: "40px",
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "rgba(0, 0, 0, 0.05)",
+                cursor: "pointer"
+              }}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--palette-ink)" strokeWidth="2.2">
+                {mobileMenuOpen ? (
+                  <>
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </>
+                ) : (
+                  <>
+                    <line x1="4" y1="7" x2="20" y2="7" />
+                    <line x1="4" y1="12" x2="20" y2="12" />
+                    <line x1="4" y1="17" x2="20" y2="17" />
+                  </>
+                )}
+              </svg>
+            </button>
           </div>
-
-          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Link
-                to="/contact"
-                className="btn btn-accent btn-sm"
-                style={{
-                  padding: "0.5rem 1.35rem",
-                  fontSize: "0.875rem",
-                  boxShadow: "0 4px 14px rgba(216, 150, 37, 0.22)"
-                }}
-              >
-                Book a Visit
-              </Link>
-            </motion.div>
-
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Link
-                to="/login"
-                className="btn btn-secondary btn-sm"
-                style={{
-                  padding: "0.5rem 1.15rem",
-                  fontSize: "0.85rem",
-                  fontWeight: 600
-                }}
-              >
-                <span>🔐</span> Portal
-              </Link>
-            </motion.div>
-          </div>
-        </nav>
-
-        {/* Mobile Toggle Button */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle navigation"
-          className="mobile-toggle"
-          style={{
-            padding: "0.5rem",
-            fontSize: "1.5rem",
-            color: "var(--primary)",
-            display: "none"
-          }}
-        >
-          {mobileMenuOpen ? "✕" : "☰"}
-        </button>
-      </div>
+        </div>
+      </header>
 
       {/* Mobile Drawer */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
+      {mobileMenuOpen && (
+        <div
+          style={{
+            position: "fixed",
+            top: "88px",
+            left: "16px",
+            right: "16px",
+            zIndex: 899,
+            backgroundColor: "rgba(255, 255, 255, 0.98)",
+            backdropFilter: "blur(20px)",
+            borderRadius: "24px",
+            padding: "22px",
+            boxShadow: "0 12px 36px rgba(0,0,0,0.15)",
+            border: "1px solid rgba(255, 255, 255, 0.9)",
+            display: "flex",
+            flexDirection: "column",
+            gap: "14px"
+          }}
+        >
+          <button
+            onClick={() => handleNavClick("/")}
+            style={{ textAlign: "left", fontSize: "16px", fontWeight: 600, color: "var(--palette-ink)", padding: "6px 0" }}
+          >
+            Home
+          </button>
+          <button
+            onClick={() => handleNavClick("/about")}
+            style={{ textAlign: "left", fontSize: "16px", fontWeight: 600, color: "var(--palette-ink)", padding: "6px 0" }}
+          >
+            About Us
+          </button>
+          <button
+            onClick={() => handleNavClick("/admissions")}
+            style={{ textAlign: "left", fontSize: "16px", fontWeight: 600, color: "var(--palette-ink)", padding: "6px 0" }}
+          >
+            Admissions (Play to 8)
+          </button>
+          <button
+            onClick={() => handleNavClick("/contact")}
+            style={{ textAlign: "left", fontSize: "16px", fontWeight: 600, color: "var(--palette-ink)", padding: "6px 0" }}
+          >
+            Contact Us
+          </button>
+          <div style={{ height: "1px", backgroundColor: "var(--palette-line)", margin: "4px 0" }} />
+          <button
+            onClick={() => handleNavClick("/about#book-visit")}
+            style={{ textAlign: "left", fontSize: "15px", fontWeight: 700, color: "var(--palette-coralDark)", padding: "6px 0" }}
+          >
+            📅 Book a Visit & Campus Tour →
+          </button>
+          <Link
+            to="/login"
+            onClick={() => setMobileMenuOpen(false)}
             style={{
-              backgroundColor: "var(--surface)",
-              borderBottom: "1px solid var(--border)",
-              boxShadow: "var(--shadow-md)",
-              padding: "1rem 1.5rem 1.75rem"
+              fontSize: "15px",
+              fontWeight: 700,
+              color: "var(--palette-ink)",
+              padding: "8px 0",
+              textDecoration: "none",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px"
             }}
           >
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1.25rem" }}>
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  onClick={() => setMobileMenuOpen(false)}
-                  style={{
-                    padding: "0.75rem 1rem",
-                    borderRadius: "var(--radius-md)",
-                    fontWeight: 600,
-                    fontSize: "1rem",
-                    color: isActive(link.path) ? "var(--primary)" : "var(--text)",
-                    backgroundColor: isActive(link.path) ? "var(--primary-soft)" : "transparent"
-                  }}
-                >
-                  {link.name}
-                </Link>
-              ))}
-            </div>
+            <LockIcon size={16} color="var(--palette-ink)" />
+            <span>Staff Login (Admin & Teachers) →</span>
+          </Link>
+        </div>
+      )}
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-              <Link
-                to="/contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="btn btn-accent"
-                style={{ width: "100%", justifyContent: "center" }}
-              >
-                Book a Visit →
-              </Link>
-              <Link
-                to="/login"
-                onClick={() => setMobileMenuOpen(false)}
-                className="btn btn-secondary"
-                style={{ width: "100%", justifyContent: "center" }}
-              >
-                🔐 Staff Portal
-              </Link>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
+      {/* Responsive Style Tag */}
       <style>{`
-        @media (max-width: 840px) {
-          .desktop-nav { display: none !important; }
-          .mobile-toggle { display: block !important; }
+        @media (min-width: 960px) {
+          .navbar-desktop-links {
+            display: flex !important;
+          }
+          .navbar-mobile-toggle {
+            display: none !important;
+          }
         }
       `}</style>
-    </header>
+    </>
   );
 }

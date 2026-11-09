@@ -127,11 +127,32 @@ export default function ClassesPage() {
       <Modal isOpen={addModalOpen} onClose={() => setAddModalOpen(false)} title="Add New Class & Section">
         <form onSubmit={handleCreate}>
           <div className="form-group">
-            <label className="form-label">Grade / Class Name *</label>
+            <label className="form-label">Grade / Class Name (Play to 8) *</label>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "8px" }}>
+              {["Playgroup", "Nursery", "LKG", "UKG", "Class 1", "Class 2", "Class 3", "Class 4", "Class 5", "Class 6", "Class 7", "Class 8"].map((clsName) => (
+                <button
+                  key={clsName}
+                  type="button"
+                  onClick={() => setName(clsName)}
+                  style={{
+                    fontSize: "11px",
+                    padding: "3px 8px",
+                    borderRadius: "10px",
+                    border: "1px solid var(--border)",
+                    backgroundColor: name === clsName ? "var(--palette-coral)" : "#f8f8f8",
+                    color: "var(--palette-ink)",
+                    cursor: "pointer",
+                    fontWeight: 600
+                  }}
+                >
+                  {clsName}
+                </button>
+              ))}
+            </div>
             <input
               type="text"
               required
-              placeholder="e.g. 10 or 12-Science or Nursery"
+              placeholder="e.g. Nursery, LKG, Class 1, or Class 8"
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="form-input"
