@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
 import { schoolData } from "../data/school";
 
 export default function Navbar() {
@@ -27,73 +28,97 @@ export default function Navbar() {
         top: 0,
         zIndex: 100,
         backgroundColor: "rgba(255, 255, 255, 0.95)",
-        backdropFilter: "blur(8px)",
+        backdropFilter: "blur(10px)",
         borderBottom: "1px solid var(--border)",
-        boxShadow: "var(--shadow-sm)"
+        boxShadow: "0 4px 20px -2px rgba(0, 0, 0, 0.05)"
       }}
     >
-      <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "76px" }}>
+      <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "78px" }}>
         {/* Brand */}
-        <Link to="/" style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-          <div
+        <Link to="/" style={{ display: "flex", alignItems: "center", gap: "0.85rem" }}>
+          <motion.div
+            whileHover={{ scale: 1.08, rotate: [0, -5, 5, 0] }}
+            transition={{ duration: 0.4 }}
             style={{
-              width: "44px",
-              height: "44px",
-              borderRadius: "50%",
-              background: "linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%)",
+              width: "48px",
+              height: "48px",
+              borderRadius: "14px",
+              background: "linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               color: "#ffffff",
-              fontWeight: 800,
-              fontSize: "1.25rem",
-              boxShadow: "var(--shadow-sm)"
+              fontWeight: 900,
+              fontSize: "1.15rem",
+              letterSpacing: "0.05em",
+              boxShadow: "0 8px 16px -4px rgba(30, 64, 175, 0.35)",
+              border: "2px solid rgba(255,255,255,0.4)"
             }}
           >
-            SX
-          </div>
+            DPS
+          </motion.div>
           <div>
-            <div style={{ fontWeight: 800, fontSize: "1.05rem", color: "var(--primary)", lineHeight: 1.2 }}>
+            <div style={{ fontWeight: 800, fontSize: "1.15rem", color: "var(--primary)", lineHeight: 1.2 }}>
               {schoolData.name}
             </div>
-            <div style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>{schoolData.affiliation}</div>
+            <div style={{ fontSize: "0.75rem", color: "var(--accent)", fontWeight: 700, letterSpacing: "0.03em" }}>
+              CBSE Affiliation No. 2130894 • Est. {schoolData.established}
+            </div>
           </div>
         </Link>
 
         {/* Desktop Nav */}
-        <nav style={{ display: "flex", alignItems: "center", gap: "1.5rem" }} className="desktop-nav">
-          <div style={{ display: "flex", gap: "0.5rem" }}>
+        <nav style={{ display: "flex", alignItems: "center", gap: "1.75rem" }} className="desktop-nav">
+          <div style={{ display: "flex", gap: "0.4rem" }}>
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
                 style={{
-                  padding: "0.5rem 0.85rem",
-                  fontSize: "0.925rem",
+                  position: "relative",
+                  padding: "0.6rem 0.95rem",
+                  fontSize: "0.95rem",
                   fontWeight: 600,
-                  borderRadius: "var(--radius-sm)",
+                  borderRadius: "var(--radius-md)",
                   color: isActive(link.path) ? "var(--primary)" : "var(--text-muted)",
                   backgroundColor: isActive(link.path) ? "var(--primary-soft)" : "transparent",
-                  transition: "all 0.2s"
+                  transition: "all 0.2s ease"
                 }}
               >
                 {link.name}
+                {isActive(link.path) && (
+                  <motion.div
+                    layoutId="activeNavIndicator"
+                    style={{
+                      position: "absolute",
+                      bottom: "2px",
+                      left: "15%",
+                      width: "70%",
+                      height: "3px",
+                      backgroundColor: "var(--primary)",
+                      borderRadius: "2px"
+                    }}
+                  />
+                )}
               </Link>
             ))}
           </div>
 
-          <Link
-            to="/login"
-            className="btn btn-primary"
-            style={{
-              fontSize: "0.9rem",
-              padding: "0.5rem 1.15rem",
-              borderRadius: "var(--radius-full)",
-              minHeight: "40px"
-            }}
-          >
-            <span>🔐</span> Portal Login
-          </Link>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Link
+              to="/login"
+              className="btn btn-primary"
+              style={{
+                fontSize: "0.9rem",
+                padding: "0.6rem 1.35rem",
+                borderRadius: "var(--radius-full)",
+                minHeight: "42px",
+                boxShadow: "0 4px 14px 0 rgba(30, 64, 175, 0.3)"
+              }}
+            >
+              <span>🔐</span> Portal Login
+            </Link>
+          </motion.div>
         </nav>
 
         {/* Mobile Hamburger Button */}
@@ -103,8 +128,8 @@ export default function Navbar() {
           className="mobile-toggle"
           style={{
             padding: "0.5rem",
-            fontSize: "1.5rem",
-            color: "var(--text)"
+            fontSize: "1.6rem",
+            color: "var(--primary)"
           }}
         >
           {mobileMenuOpen ? "✕" : "☰"}
@@ -113,7 +138,10 @@ export default function Navbar() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          exit={{ opacity: 0, height: 0 }}
           style={{
             padding: "1rem 1.25rem 1.5rem",
             backgroundColor: "var(--surface)",
@@ -129,7 +157,7 @@ export default function Navbar() {
               to={link.path}
               onClick={() => setMobileMenuOpen(false)}
               style={{
-                padding: "0.75rem 1rem",
+                padding: "0.85rem 1rem",
                 borderRadius: "var(--radius-md)",
                 fontWeight: 600,
                 color: isActive(link.path) ? "var(--primary)" : "var(--text)",
@@ -143,11 +171,11 @@ export default function Navbar() {
             to="/login"
             onClick={() => setMobileMenuOpen(false)}
             className="btn btn-primary"
-            style={{ width: "100%", marginTop: "0.5rem" }}
+            style={{ width: "100%", marginTop: "0.5rem", padding: "0.85rem" }}
           >
-            🔐 Portal Login
+            🔐 Staff & Teacher Portal Login
           </Link>
-        </div>
+        </motion.div>
       )}
 
       <style>{`
@@ -162,4 +190,3 @@ export default function Navbar() {
     </header>
   );
 }
-
