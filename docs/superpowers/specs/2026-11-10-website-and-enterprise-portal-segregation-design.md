@@ -167,3 +167,4 @@ school-project/
 * `dps-junior-website/` builds independently into static assets with zero portal dependencies.
 * `enterprise-org-portal/frontend/` builds independently into an ERP client with zero public website clutter.
 * `enterprise-org-portal/backend/` maintains its live Render/Supabase connection without any disruption.
+
