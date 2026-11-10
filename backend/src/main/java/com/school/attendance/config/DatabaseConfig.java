@@ -71,6 +71,9 @@ public class DatabaseConfig {
                     String query = dbUri.getQuery();
                     String jdbcUrl = "jdbc:postgresql://" + host + ":" + port + path;
                     if (query != null && !query.isBlank()) {
+                        if (!query.contains("sslmode=")) {
+                            query += "&sslmode=require";
+                        }
                         jdbcUrl += "?" + query;
                     } else {
                         jdbcUrl += "?sslmode=require";
