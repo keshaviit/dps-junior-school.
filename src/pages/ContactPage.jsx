@@ -69,7 +69,7 @@ export default function ContactPage() {
               lineHeight: 1.1
             }}
           >
-            Contact Stillwater <span className="script-hero">School.</span>
+            Contact DPS Junior <span className="script-hero">School.</span>
           </h1>
           <p style={{ fontSize: "17px", color: palette.muted, marginTop: "16px", lineHeight: "28px" }}>
             We would be delighted to welcome your family to our green campus for an unhurried meeting and tour.
@@ -359,7 +359,7 @@ export default function ContactPage() {
             CAMPUS LOCATION
           </div>
           <h3 style={{ fontSize: "28px", fontWeight: 600, color: palette.ink, letterSpacing: "-0.5px", marginBottom: "16px" }}>
-            Finding Stillwater Campus
+            Finding DPS Junior Campus
           </h3>
           <div
             style={{
@@ -372,7 +372,7 @@ export default function ContactPage() {
             }}
           >
             <iframe
-              title="Stillwater School Campus Location Map"
+              title="DPS Junior School Campus Location Map"
               src={schoolData.contact.mapEmbedUrl}
               width="100%"
               height="100%"

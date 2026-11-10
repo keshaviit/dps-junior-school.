@@ -7,6 +7,8 @@ export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const PORTAL_URL = import.meta.env.VITE_PORTAL_URL || "https://dps-junior-school.onrender.com";
+
   const handleNavClick = (target) => {
     setMobileMenuOpen(false);
     if (target.startsWith("/")) {
@@ -57,9 +59,9 @@ export default function Navbar() {
       <header
         style={{
           position: "fixed",
-          top: "16px",
-          left: "16px",
-          right: "16px",
+          top: "12px",
+          left: "12px",
+          right: "12px",
           zIndex: 900,
           display: "flex",
           justifyContent: "center",
@@ -70,17 +72,17 @@ export default function Navbar() {
           style={{
             width: "100%",
             maxWidth: "1060px",
-            height: "64px",
-            backgroundColor: "rgba(255, 255, 255, 0.90)",
-            backdropFilter: "blur(16px)",
-            WebkitBackdropFilter: "blur(16px)",
+            height: "60px",
+            backgroundColor: "rgba(255, 255, 255, 0.94)",
+            backdropFilter: "blur(18px)",
+            WebkitBackdropFilter: "blur(18px)",
             borderRadius: "32px",
-            padding: "0 10px 0 18px",
+            padding: "0 10px 0 16px",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            border: "1px solid rgba(255, 255, 255, 0.95)",
-            boxShadow: "0 4px 24px rgba(0, 0, 0, 0.07)",
+            border: "1px solid rgba(230, 226, 221, 0.9)",
+            boxShadow: "0 4px 20px rgba(0, 0, 0, 0.06)",
             pointerEvents: "auto",
             transition: "all 0.3s ease"
           }}
@@ -94,7 +96,8 @@ export default function Navbar() {
               alignItems: "center",
               gap: "10px",
               cursor: "pointer",
-              textDecoration: "none"
+              textDecoration: "none",
+              flexShrink: 0
             }}
           >
             <div
@@ -124,8 +127,8 @@ export default function Navbar() {
                   fontFamily: "var(--font-sans)",
                   fontWeight: 800,
                   color: "var(--palette-ink)",
-                  fontSize: "17px",
-                  letterSpacing: "-0.4px",
+                  fontSize: "16px",
+                  letterSpacing: "-0.3px",
                   lineHeight: 1.1
                 }}
               >
@@ -137,11 +140,11 @@ export default function Navbar() {
             </div>
           </Link>
 
-          {/* Desktop Nav Links (Rearranged according to the actual site structure) */}
+          {/* Desktop Nav Links */}
           <nav
             style={{
               display: "none",
-              gap: "20px",
+              gap: "22px",
               alignItems: "center"
             }}
             className="navbar-desktop-links"
@@ -156,7 +159,9 @@ export default function Navbar() {
                 fontSize: "14px",
                 cursor: "pointer",
                 position: "relative",
-                transition: "color 0.15s ease"
+                transition: "color 0.15s ease",
+                background: "none",
+                border: "none"
               }}
               onMouseEnter={(e) => (e.target.style.color = "var(--palette-ink)")}
               onMouseLeave={(e) => {
@@ -189,7 +194,9 @@ export default function Navbar() {
                 fontSize: "14px",
                 cursor: "pointer",
                 position: "relative",
-                transition: "color 0.15s ease"
+                transition: "color 0.15s ease",
+                background: "none",
+                border: "none"
               }}
               onMouseEnter={(e) => (e.target.style.color = "var(--palette-ink)")}
               onMouseLeave={(e) => {
@@ -222,7 +229,9 @@ export default function Navbar() {
                 fontSize: "14px",
                 cursor: "pointer",
                 position: "relative",
-                transition: "color 0.15s ease"
+                transition: "color 0.15s ease",
+                background: "none",
+                border: "none"
               }}
               onMouseEnter={(e) => (e.target.style.color = "var(--palette-ink)")}
               onMouseLeave={(e) => {
@@ -245,7 +254,42 @@ export default function Navbar() {
               )}
             </button>
 
-            {/* 4. Contact Us */}
+            {/* 4. Gallery */}
+            <button
+              onClick={() => handleNavClick("/gallery")}
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontWeight: isActive("/gallery") ? 700 : 500,
+                color: isActive("/gallery") ? "var(--palette-ink)" : "var(--palette-muted)",
+                fontSize: "14px",
+                cursor: "pointer",
+                position: "relative",
+                transition: "color 0.15s ease",
+                background: "none",
+                border: "none"
+              }}
+              onMouseEnter={(e) => (e.target.style.color = "var(--palette-ink)")}
+              onMouseLeave={(e) => {
+                if (!isActive("/gallery")) e.target.style.color = "var(--palette-muted)";
+              }}
+            >
+              Gallery
+              {isActive("/gallery") && (
+                <span
+                  style={{
+                    position: "absolute",
+                    bottom: "-4px",
+                    left: "0",
+                    right: "0",
+                    height: "2px",
+                    backgroundColor: "var(--palette-coralDark)",
+                    borderRadius: "1px"
+                  }}
+                />
+              )}
+            </button>
+
+            {/* 5. Contact Us */}
             <button
               onClick={() => handleNavClick("/contact")}
               style={{
@@ -255,7 +299,9 @@ export default function Navbar() {
                 fontSize: "14px",
                 cursor: "pointer",
                 position: "relative",
-                transition: "color 0.15s ease"
+                transition: "color 0.15s ease",
+                background: "none",
+                border: "none"
               }}
               onMouseEnter={(e) => (e.target.style.color = "var(--palette-ink)")}
               onMouseLeave={(e) => {
@@ -281,23 +327,25 @@ export default function Navbar() {
 
           {/* Right Action CTAs */}
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            {/* Book a visit CTA (lands on /about#book-visit) */}
+            {/* Book a visit CTA (Desktop only) */}
             <button
               onClick={() => handleNavClick("/about#book-visit")}
+              className="navbar-cta-desktop"
               style={{
                 backgroundColor: "var(--palette-coral)",
                 borderRadius: "22px",
-                height: "42px",
+                height: "38px",
                 padding: "0 16px",
-                display: "inline-flex",
+                display: "none",
                 gap: "7px",
                 alignItems: "center",
                 color: "var(--palette-ink)",
                 fontFamily: "var(--font-sans)",
                 fontWeight: 600,
                 fontSize: "13px",
-                boxShadow: "0 2px 10px rgba(156, 81, 78, 0.15)",
+                boxShadow: "0 2px 8px rgba(156, 81, 78, 0.12)",
                 cursor: "pointer",
+                border: "none",
                 transition: "transform 0.15s ease"
               }}
               onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.02)")}
@@ -307,38 +355,41 @@ export default function Navbar() {
               <ArrowRight size={14} color="var(--palette-ink)" />
             </button>
 
-            {/* Staff Login Button */}
-            <Link
-              to="/login"
+            {/* Portal Login Button (Desktop only) */}
+            <a
+              href={PORTAL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="navbar-cta-desktop"
               style={{
-                backgroundColor: "var(--palette-ink)",
+                backgroundColor: "#264E52",
                 borderRadius: "22px",
-                height: "42px",
+                height: "38px",
                 padding: "0 16px",
-                display: "inline-flex",
+                display: "none",
                 gap: "7px",
                 alignItems: "center",
-                color: "var(--palette-white)",
+                color: "#ffffff",
                 fontFamily: "var(--font-sans)",
                 fontWeight: 600,
                 fontSize: "13px",
-                boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
+                boxShadow: "0 2px 8px rgba(38, 78, 82, 0.2)",
                 textDecoration: "none",
                 cursor: "pointer",
                 transition: "all 0.15s ease"
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "scale(1.02)";
-                e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.18)";
+                e.currentTarget.style.backgroundColor = "#1e3f42";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = "scale(1)";
-                e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.12)";
+                e.currentTarget.style.backgroundColor = "#264E52";
               }}
             >
-              <LockIcon size={14} color="var(--palette-white)" />
-              <span>Staff Login</span>
-            </Link>
+              <LockIcon size={14} color="#ffffff" />
+              <span>Portal Login</span>
+            </a>
 
             {/* Mobile Hamburger Toggle */}
             <button
@@ -346,14 +397,16 @@ export default function Navbar() {
               className="navbar-mobile-toggle"
               aria-label="Toggle navigation menu"
               style={{
-                width: "40px",
-                height: "40px",
+                width: "38px",
+                height: "38px",
                 borderRadius: "50%",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 backgroundColor: "rgba(0, 0, 0, 0.05)",
-                cursor: "pointer"
+                border: "none",
+                cursor: "pointer",
+                flexShrink: 0
               }}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--palette-ink)" strokeWidth="2.2">
@@ -380,77 +433,113 @@ export default function Navbar() {
         <div
           style={{
             position: "fixed",
-            top: "88px",
-            left: "16px",
-            right: "16px",
+            top: "80px",
+            left: "12px",
+            right: "12px",
             zIndex: 899,
             backgroundColor: "rgba(255, 255, 255, 0.98)",
             backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
             borderRadius: "24px",
-            padding: "22px",
-            boxShadow: "0 12px 36px rgba(0,0,0,0.15)",
-            border: "1px solid rgba(255, 255, 255, 0.9)",
+            padding: "20px",
+            boxShadow: "0 12px 36px rgba(0,0,0,0.12)",
+            border: "1px solid rgba(230, 226, 221, 0.9)",
             display: "flex",
             flexDirection: "column",
-            gap: "14px"
+            gap: "12px"
           }}
         >
           <button
             onClick={() => handleNavClick("/")}
-            style={{ textAlign: "left", fontSize: "16px", fontWeight: 600, color: "var(--palette-ink)", padding: "6px 0" }}
+            style={{ textAlign: "left", fontSize: "16px", fontWeight: 600, color: "var(--palette-ink)", padding: "8px 0", background: "none", border: "none" }}
           >
             Home
           </button>
           <button
             onClick={() => handleNavClick("/about")}
-            style={{ textAlign: "left", fontSize: "16px", fontWeight: 600, color: "var(--palette-ink)", padding: "6px 0" }}
+            style={{ textAlign: "left", fontSize: "16px", fontWeight: 600, color: "var(--palette-ink)", padding: "8px 0", background: "none", border: "none" }}
           >
             About Us
           </button>
           <button
             onClick={() => handleNavClick("/admissions")}
-            style={{ textAlign: "left", fontSize: "16px", fontWeight: 600, color: "var(--palette-ink)", padding: "6px 0" }}
+            style={{ textAlign: "left", fontSize: "16px", fontWeight: 600, color: "var(--palette-ink)", padding: "8px 0", background: "none", border: "none" }}
           >
-            Admissions (Play to 8)
+            Admissions (Play to VIII) & Fee Schedule
+          </button>
+          <button
+            onClick={() => handleNavClick("/gallery")}
+            style={{ textAlign: "left", fontSize: "16px", fontWeight: 600, color: "var(--palette-ink)", padding: "8px 0", background: "none", border: "none" }}
+          >
+            Campus Photo Gallery
           </button>
           <button
             onClick={() => handleNavClick("/contact")}
-            style={{ textAlign: "left", fontSize: "16px", fontWeight: 600, color: "var(--palette-ink)", padding: "6px 0" }}
+            style={{ textAlign: "left", fontSize: "16px", fontWeight: 600, color: "var(--palette-ink)", padding: "8px 0", background: "none", border: "none" }}
           >
-            Contact Us
+            Contact & Location Map
           </button>
-          <div style={{ height: "1px", backgroundColor: "var(--palette-line)", margin: "4px 0" }} />
+
+          <div style={{ height: "1px", backgroundColor: "var(--palette-line)", margin: "6px 0" }} />
+
+          {/* Book Visit Mobile CTA */}
           <button
             onClick={() => handleNavClick("/about#book-visit")}
-            style={{ textAlign: "left", fontSize: "15px", fontWeight: 700, color: "var(--palette-coralDark)", padding: "6px 0" }}
-          >
-            📅 Book a Visit & Campus Tour →
-          </button>
-          <Link
-            to="/login"
-            onClick={() => setMobileMenuOpen(false)}
             style={{
-              fontSize: "15px",
-              fontWeight: 700,
-              color: "var(--palette-ink)",
-              padding: "8px 0",
-              textDecoration: "none",
+              backgroundColor: "var(--palette-coral)",
+              borderRadius: "16px",
+              padding: "12px 18px",
               display: "flex",
               alignItems: "center",
-              gap: "8px"
+              justifyContent: "space-between",
+              color: "var(--palette-ink)",
+              fontWeight: 700,
+              fontSize: "14px",
+              border: "none",
+              cursor: "pointer"
             }}
           >
-            <LockIcon size={16} color="var(--palette-ink)" />
-            <span>Staff Login (Admin & Teachers) →</span>
-          </Link>
+            <span>Book a Campus Tour</span>
+            <ArrowRight size={16} color="var(--palette-ink)" />
+          </button>
+
+          {/* Portal Login Mobile CTA */}
+          <a
+            href={PORTAL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMobileMenuOpen(false)}
+            style={{
+              backgroundColor: "#264E52",
+              borderRadius: "16px",
+              padding: "12px 18px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              color: "#ffffff",
+              fontWeight: 700,
+              fontSize: "14px",
+              textDecoration: "none",
+              cursor: "pointer"
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <LockIcon size={16} color="#ffffff" />
+              <span>Staff Portal Login</span>
+            </div>
+            <span>↗</span>
+          </a>
         </div>
       )}
 
-      {/* Responsive Style Tag */}
+      {/* Responsive Styles */}
       <style>{`
         @media (min-width: 960px) {
           .navbar-desktop-links {
             display: flex !important;
+          }
+          .navbar-cta-desktop {
+            display: inline-flex !important;
           }
           .navbar-mobile-toggle {
             display: none !important;
