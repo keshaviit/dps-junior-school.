@@ -190,3 +190,4 @@ export default function InquiryForm({ defaultGrade = "Class 1" }) {
     </div>
   );
 }
+

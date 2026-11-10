@@ -75,3 +75,4 @@ export default function LightboxModal({ image, onClose, onPrev, onNext }) {
     </div>
   );
 }
+
