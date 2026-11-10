@@ -2,6 +2,13 @@ import React, { useState } from "react";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { schoolData } from "../data/school";
+import {
+  DashboardIcon,
+  UsersIcon,
+  SchoolIcon,
+  UserIcon,
+  ChartBarIcon
+} from "../components/Icons";
 
 export default function AdminLayout() {
   const { user, logout } = useAuth();
@@ -14,11 +21,11 @@ export default function AdminLayout() {
   };
 
   const menuItems = [
-    { title: "Dashboard", path: "/admin", icon: "📊", end: true },
-    { title: "Teachers", path: "/admin/teachers", icon: "👨‍🏫" },
-    { title: "Classes & Sections", path: "/admin/classes", icon: "🏫" },
-    { title: "Students", path: "/admin/students", icon: "🎓" },
-    { title: "Monthly Reports", path: "/admin/reports", icon: "📈" }
+    { title: "Dashboard", path: "/admin", icon: DashboardIcon, end: true },
+    { title: "Teachers", path: "/admin/teachers", icon: UsersIcon },
+    { title: "Classes & Sections", path: "/admin/classes", icon: SchoolIcon },
+    { title: "Students", path: "/admin/students", icon: UserIcon },
+    { title: "Monthly Reports", path: "/admin/reports", icon: ChartBarIcon }
   ];
 
   return (
@@ -78,7 +85,7 @@ export default function AdminLayout() {
                 transition: "all 0.2s"
               })}
             >
-              <span>{item.icon}</span>
+              {React.createElement(item.icon, { size: 18, color: "currentColor" })}
               <span>{item.title}</span>
             </NavLink>
           ))}
@@ -87,8 +94,8 @@ export default function AdminLayout() {
         {/* User Info & Logout at bottom */}
         <div style={{ padding: "1.25rem", borderTop: "1px solid #1e293b", backgroundColor: "#0b1329" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.85rem" }}>
-            <div style={{ width: "36px", height: "36px", borderRadius: "50%", background: "var(--primary-light)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: "bold" }}>
-              👤
+            <div style={{ width: "36px", height: "36px", borderRadius: "50%", background: "var(--primary-light)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <UserIcon size={18} color="#ffffff" />
             </div>
             <div style={{ overflow: "hidden" }}>
               <div style={{ fontWeight: 700, fontSize: "0.9rem", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden" }}>
@@ -135,8 +142,9 @@ export default function AdminLayout() {
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-            <Link to="/" target="_blank" className="btn btn-secondary btn-sm">
-              🌐 View Public Site
+            <Link to="/" target="_blank" className="btn btn-secondary btn-sm" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+              <SchoolIcon size={15} color="currentColor" />
+              <span>View Public Site</span>
             </Link>
           </div>
         </header>
@@ -169,7 +177,7 @@ export default function AdminLayout() {
                   backgroundColor: isActive ? "var(--primary)" : "transparent"
                 })}
               >
-                <span>{item.icon}</span>
+                {React.createElement(item.icon, { size: 18, color: "currentColor" })}
                 <span>{item.title}</span>
               </NavLink>
             ))}

@@ -2,6 +2,13 @@ import React, { useState } from "react";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { schoolData } from "../data/school";
+import {
+  SchoolIcon,
+  ClipboardCheckIcon,
+  CalendarIcon,
+  ChartBarIcon,
+  UserIcon
+} from "../components/Icons";
 
 export default function TeacherLayout() {
   const { user, logout } = useAuth();
@@ -14,10 +21,10 @@ export default function TeacherLayout() {
   };
 
   const menuItems = [
-    { title: "My Classes", path: "/teacher", icon: "🏫", end: true },
-    { title: "Mark Attendance", path: "/teacher/attendance", icon: "📝" },
-    { title: "Attendance History", path: "/teacher/history", icon: "📅" },
-    { title: "Monthly Reports", path: "/teacher/reports", icon: "📊" }
+    { title: "My Classes", path: "/teacher", icon: SchoolIcon, end: true },
+    { title: "Mark Attendance", path: "/teacher/attendance", icon: ClipboardCheckIcon },
+    { title: "Attendance History", path: "/teacher/history", icon: CalendarIcon },
+    { title: "Monthly Reports", path: "/teacher/reports", icon: ChartBarIcon }
   ];
 
   return (
@@ -77,7 +84,7 @@ export default function TeacherLayout() {
                 transition: "all 0.2s"
               })}
             >
-              <span>{item.icon}</span>
+              {React.createElement(item.icon, { size: 18, color: "currentColor" })}
               <span>{item.title}</span>
             </NavLink>
           ))}
@@ -86,8 +93,8 @@ export default function TeacherLayout() {
         {/* User Info & Logout at bottom */}
         <div style={{ padding: "1.25rem", borderTop: "1px solid #334155", backgroundColor: "#0f172a" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.85rem" }}>
-            <div style={{ width: "36px", height: "36px", borderRadius: "50%", background: "var(--primary-light)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: "bold" }}>
-              👨‍🏫
+            <div style={{ width: "36px", height: "36px", borderRadius: "50%", background: "var(--primary-light)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <UserIcon size={18} color="#ffffff" />
             </div>
             <div style={{ overflow: "hidden" }}>
               <div style={{ fontWeight: 700, fontSize: "0.9rem", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden" }}>
@@ -134,8 +141,9 @@ export default function TeacherLayout() {
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-            <Link to="/" target="_blank" className="btn btn-secondary btn-sm">
-              🌐 View Public Site
+            <Link to="/" target="_blank" className="btn btn-secondary btn-sm" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+              <SchoolIcon size={15} color="currentColor" />
+              <span>View Public Site</span>
             </Link>
           </div>
         </header>
@@ -168,7 +176,7 @@ export default function TeacherLayout() {
                   backgroundColor: isActive ? "var(--primary-light)" : "transparent"
                 })}
               >
-                <span>{item.icon}</span>
+                {React.createElement(item.icon, { size: 18, color: "currentColor" })}
                 <span>{item.title}</span>
               </NavLink>
             ))}
