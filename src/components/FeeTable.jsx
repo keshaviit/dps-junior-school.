@@ -162,7 +162,7 @@ export default function FeeTable() {
 
             <div className="mt-6 pt-4 border-t border-slate-100">
               <a
-                href="#book-visit"
+                href="/about#book-visit"
                 className="block text-center text-xs font-bold text-[#264E52] hover:underline"
               >
                 Inquire for {tier.group} →

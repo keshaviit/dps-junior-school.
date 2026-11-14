@@ -1,3 +1,36 @@
+// Converts any Google Drive sharing/open link to a direct browser-renderable image URL
+export const toDirectImageUrl = (url, useThumbnail = false) => {
+  if (!url) return "";
+  const id = url.match(/\/d\/([a-zA-Z0-9_-]+)/)?.[1] || url.match(/[?&]id=([a-zA-Z0-9_-]+)/)?.[1];
+  if (id) {
+    return useThumbnail
+      ? `https://drive.google.com/thumbnail?id=${id}&sz=w1200`
+      : `https://lh3.googleusercontent.com/d/${id}`;
+  }
+  return url;
+};
+
+export const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY || "3656d22f-5a7b-49ab-9f60-580b82cde8a4";
+
+export async function sendFormEmail(subject, data) {
+  try {
+    const res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_KEY,
+        subject: subject,
+        from_name: "DPS Junior Public School Website",
+        ...data
+      })
+    });
+    return res.ok;
+  } catch (err) {
+    console.error("Form email dispatch error:", err);
+    return false;
+  }
+}
+
 export const schoolData = {
   name: "DPS JUNIOR PUBLIC SCHOOL",
   shortName: "DPS Junior",
@@ -106,6 +139,94 @@ export const schoolData = {
       quote: "The teachers notice the small things — a child who loves botany, a budding mathematician, a shy reader. They unlock their gifts with such patience and joy.",
       author: "Dr. Sunita Batra",
       role: "Alumni Parent & Paediatrician"
+    }
+  ],
+
+  // Gallery Photos — categorized for Indian Playgroup to Class VIII CBSE standards
+  gallery: [
+    {
+      id: 1,
+      title: "Playgroup Sensory Play",
+      caption: "Pre-primary toddlers developing tactile and motor skills with blocks and clay.",
+      category: "Playgroup & Kindergarten",
+      url: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: 2,
+      title: "Janmashtami & Festive Celebrations",
+      caption: "Little scholars dressed as Krishna and Radha celebrating Indian cultural festivals.",
+      category: "Festivals & Celebrations",
+      url: "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: 3,
+      title: "Annual Sports Day & Races",
+      caption: "Track and field races, spoon race, and tug-of-war on Annual Sports Day.",
+      category: "Sports & Yoga",
+      url: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: 4,
+      title: "Smart Classroom Learning",
+      caption: "Interactive digital boards and collaborative group study in Class 4.",
+      category: "Classrooms & Labs",
+      url: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: 5,
+      title: "Annual Day Dance & Drama",
+      caption: "Students performing classical and folk dances on the grand Annual Day stage.",
+      category: "Art & Stage Events",
+      url: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: 6,
+      title: "Kindergarten Activity Corner",
+      caption: "Story circles, phonics games, and creative coloring in UKG.",
+      category: "Playgroup & Kindergarten",
+      url: "https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: 7,
+      title: "Science & Robotics Tinkering Lab",
+      caption: "Hands-on experiential experiments and robotics models by Class 7 students.",
+      category: "Classrooms & Labs",
+      url: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: 8,
+      title: "Green Outdoor Playground",
+      caption: "Safe outdoor slides, swings, and morning PT assembly ground.",
+      category: "Campus & Play Area",
+      url: "https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=800&q=80"
+    }
+  ],
+
+  // School Notices / Circulars — add or edit notices here
+  notices: [
+    {
+      id: 1,
+      title: "Winter Break Holiday Notice 2026-27",
+      content: "School will remain closed from 25th December 2026 to 1st January 2027 for Winter Break. Classes resume on 2nd January 2027.",
+      category: "Holiday",
+      date: "2026-12-15",
+      important: false
+    },
+    {
+      id: 2,
+      title: "Annual Sports Day — Parent Invitation",
+      content: "Parents are cordially invited to the Annual Sports Day on 15th January 2027 at 9:00 AM on the school grounds. All parents and guardians are welcome.",
+      category: "Event",
+      date: "2027-01-05",
+      important: true
+    },
+    {
+      id: 3,
+      title: "Admissions Open for Session 2027-28",
+      content: "Admissions for the academic session 2027-28 are now open for all classes from Playgroup to Class VIII. Contact the admissions office for the registration form.",
+      category: "Academic",
+      date: "2026-11-01",
+      important: true
     }
   ]
 };

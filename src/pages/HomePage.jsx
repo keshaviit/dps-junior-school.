@@ -16,6 +16,7 @@ import {
   PlusIcon
 } from "../components/Icons";
 import StoryModal from "../components/StoryModal";
+import { sendFormEmail } from "../data/school";
 
 const palette = {
   paper: "#FDFCF8",
@@ -241,10 +242,14 @@ export default function HomePage() {
     }
   };
 
-  const submitInterest = (e) => {
+  const submitInterest = async (e) => {
     e.preventDefault();
     const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
     if (valid) {
+      sendFormEmail(`Open Morning Lead - ${email.trim()}`, {
+        "Parent Email": email.trim(),
+        "Source": "Homepage Quick Interest Bar"
+      });
       setFormMessage("Thank you! We’ll send open morning details to your inbox soon.");
       setEmail("");
     } else {

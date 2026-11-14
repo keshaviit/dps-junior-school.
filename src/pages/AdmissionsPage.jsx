@@ -9,8 +9,6 @@ import {
   SunnyIcon,
   SchoolIcon
 } from "../components/Icons";
-import FeeTable from "../components/FeeTable";
-import InquiryForm from "../components/InquiryForm";
 
 const palette = {
   paper: "#FDFCF8",
@@ -292,15 +290,6 @@ export default function AdmissionsPage() {
             </Link>
           </div>
 
-          {/* 4. FEE STRUCTURE SECTION */}
-          <div style={{ marginTop: "70px" }}>
-            <FeeTable />
-          </div>
-
-          {/* 5. DIRECT INQUIRY & WHATSAPP FORM */}
-          <div style={{ marginTop: "70px" }}>
-            <InquiryForm defaultGrade="Class 1" />
-          </div>
         </div>
       </section>
     </div>

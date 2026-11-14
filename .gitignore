@@ -12,6 +12,7 @@ target/
 *.war
 
 # Environment variables & local secrets
+.env
 .env.local
 .env.*.local
 

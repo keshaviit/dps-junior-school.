@@ -1,16 +1,63 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { schoolData } from "../data/school";
+import { schoolData, toDirectImageUrl } from "../data/school";
 
 export default function GalleryPage() {
+  const [photos, setPhotos] = useState(schoolData.gallery || []);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [activePhoto, setActivePhoto] = useState(null);
 
-  const categories = ["All", "Woodland Adventure", "Sports & Vitality", "STEM Discovery", "Music & Arts", "Early Years"];
+  const driveEnvUrl = (import.meta.env.VITE_GOOGLE_DRIVE_GALLERY_URL || import.meta.env.VITE_GALLERY_API_URL || "").trim();
+  const isDriveFolder = driveEnvUrl.includes("/drive/folders/") || driveEnvUrl.includes("drive.google.com/drive/u/");
+
+  useEffect(() => {
+    if (!driveEnvUrl) {
+      // Fallback: check for local /gallery.json
+      fetch("/gallery.json")
+        .then((r) => (r.ok ? r.json() : null))
+        .then((data) => {
+          if (Array.isArray(data) && data.length) setPhotos(data);
+        })
+        .catch(() => {});
+      return;
+    }
+
+    // Case 1: Comma-separated or single Google Drive photo links in .env
+    if (driveEnvUrl.includes("/file/d/") || driveEnvUrl.includes("id=")) {
+      const links = driveEnvUrl.split(",").map((s) => s.trim()).filter(Boolean);
+      const parsed = links.map((link, idx) => ({
+        id: `env-drive-${idx + 1}`,
+        title: `Campus Moment ${idx + 1}`,
+        caption: "DPS Junior School Campus Gallery",
+        category: "Campus Life",
+        url: link
+      }));
+      setPhotos((prev) => [...parsed, ...prev]);
+      return;
+    }
+
+    // Case 2: Webhook / Apps Script / Cloudflare Worker / JSON URL
+    if (!isDriveFolder && driveEnvUrl.startsWith("http")) {
+      fetch(driveEnvUrl)
+        .then((r) => (r.ok ? r.json() : null))
+        .then((data) => {
+          if (Array.isArray(data) && data.length) {
+            const cleaned = data.map((item) => ({
+              ...item,
+              category: (item.category || "Campus Life").trim()
+            }));
+            setPhotos(cleaned);
+          }
+        })
+        .catch(() => {});
+    }
+  }, [driveEnvUrl, isDriveFolder]);
+
+  const categories = ["All", ...new Set(photos.map((p) => p.category?.trim()).filter(Boolean))];
 
   const filteredPhotos = selectedCategory === "All"
-    ? schoolData.gallery
-    : schoolData.gallery.filter((p) => p.category === selectedCategory);
+    ? photos
+    : photos.filter((p) => p.category?.trim() === selectedCategory);
 
   return (
     <div style={{ paddingBottom: "6rem" }}>
@@ -32,7 +79,7 @@ export default function GalleryPage() {
             Campus Life in Action
           </h1>
           <p style={{ fontSize: "1.15rem", color: "#e2e8f0" }}>
-            Take a visual tour through our 45-acre parkland, STEM laboratories, equestrian fixtures, and music studios.
+            Take a visual tour through our vibrant play areas, smart classrooms, sports grounds, and festive celebrations across Playgroup to Class VIII.
           </p>
         </div>
       </section>
@@ -86,9 +133,16 @@ export default function GalleryPage() {
             >
               <div style={{ position: "relative", height: "260px", overflow: "hidden", backgroundColor: "#e2e8f0" }}>
                 <img
-                  src={photo.url}
+                  src={toDirectImageUrl(photo.url)}
                   alt={photo.title}
                   loading="lazy"
+                  referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    const fallback = toDirectImageUrl(photo.url, true);
+                    if (e.currentTarget.src !== fallback) {
+                      e.currentTarget.src = fallback;
+                    }
+                  }}
                   style={{
                     width: "100%",
                     height: "100%",
@@ -180,8 +234,15 @@ export default function GalleryPage() {
             >
               <div style={{ position: "relative", maxHeight: "68vh", backgroundColor: "#000" }}>
                 <img
-                  src={activePhoto.url}
+                  src={toDirectImageUrl(activePhoto.url)}
                   alt={activePhoto.title}
+                  referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    const fallback = toDirectImageUrl(activePhoto.url, true);
+                    if (e.currentTarget.src !== fallback) {
+                      e.currentTarget.src = fallback;
+                    }
+                  }}
                   style={{ width: "100%", height: "auto", maxHeight: "68vh", objectFit: "contain", display: "block" }}
                 />
                 <button

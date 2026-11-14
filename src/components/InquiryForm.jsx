@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ArrowRight, CheckIcon } from "./Icons";
+import { sendFormEmail } from "../data/school";
 
 export default function InquiryForm({ defaultGrade = "Class 1" }) {
   const [formData, setFormData] = useState({
@@ -41,6 +42,16 @@ export default function InquiryForm({ defaultGrade = "Class 1" }) {
     );
 
     const waUrl = `https://wa.me/${schoolWhatsAppNumber}?text=${text}`;
+
+    // Dispatches email to school inbox simultaneously
+    sendFormEmail(`Direct WhatsApp Inquiry - ${formData.parentName} (${formData.grade})`, {
+      "Parent Name": formData.parentName,
+      "Phone": formData.phone,
+      "Email": formData.email || "Not provided",
+      "Child Name": formData.childName || "Not provided",
+      "Grade Interested": formData.grade,
+      "Message": formData.message || "I would like to inquire about admissions."
+    });
 
     setTimeout(() => {
       setLoading(false);

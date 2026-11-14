@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { sendFormEmail } from "../data/school";
 import {
   ArrowRight,
   HeartIcon,
@@ -67,7 +68,7 @@ export default function AboutPage() {
     setFormError("");
   };
 
-  const handleBookingSubmit = (e) => {
+  const handleBookingSubmit = async (e) => {
     e.preventDefault();
     if (!formData.childName.trim() || !formData.parentName.trim() || !formData.email.trim() || !formData.phone.trim()) {
       setFormError("Please fill out all required fields marked with *.");
@@ -75,10 +76,20 @@ export default function AboutPage() {
     }
 
     setSubmitting(true);
-    setTimeout(() => {
-      setSubmitting(false);
-      setFormSubmitted(true);
-    }, 600);
+    await sendFormEmail(`Campus Visit Booking - ${formData.parentName} (${formData.childName})`, {
+      "Parent Name": formData.parentName,
+      "Child Name": formData.childName,
+      "Child Age": formData.childAge,
+      "Program Wing": formData.program,
+      "Email": formData.email,
+      "Phone": formData.phone,
+      "Preferred Visit Date": formData.visitDate || "Flexible",
+      "Preferred Session": formData.sessionTime === "morning" ? "Morning Open Studio (9:30 AM - 11:30 AM)" : "Afternoon Discovery (1:30 PM - 3:30 PM)",
+      "Referral Source": formData.referral,
+      "Special Notes": formData.notes || "None provided"
+    });
+    setSubmitting(false);
+    setFormSubmitted(true);
   };
 
   return (

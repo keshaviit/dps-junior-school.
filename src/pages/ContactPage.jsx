@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { schoolData } from "../data/school";
+import { schoolData, sendFormEmail } from "../data/school";
 
 const palette = {
   paper: "#FDFCF8",
@@ -28,13 +28,22 @@ export default function ContactPage() {
   });
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.parentName || !formData.email || !formData.phone) {
       toast.error("Please fill in all mandatory fields.");
       return;
     }
-    toast.success("Inquiry Sent! Our admissions registrar will reach out shortly.");
+    toast.loading("Sending inquiry...", { id: "contact-submit" });
+    await sendFormEmail(`Admissions Inquiry - ${formData.parentName}`, {
+      "Parent Name": formData.parentName,
+      "Email": formData.email,
+      "Phone": formData.phone,
+      "Grade / Wing": formData.childAgeGroup,
+      "Preferred Tour Slot": formData.preferredSlot,
+      "Message": formData.message || "No message provided"
+    });
+    toast.success("Inquiry Sent! Our admissions registrar will reach out shortly.", { id: "contact-submit" });
     setSubmitted(true);
   };
 

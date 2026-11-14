@@ -48,3 +48,4 @@ fetch("https://api.web3forms.com/submit", {
 When a parent clicks **"Submit"**:
 1. An **Email** is immediately dispatched to the school admin inbox with the full inquiry.
 2. **WhatsApp** opens on the parent's phone with the message pre-filled so they can chat directly with admissions.
+
