@@ -7,6 +7,7 @@ import AdmissionsPage from "./pages/AdmissionsPage";
 import GalleryPage from "./pages/GalleryPage";
 import NoticesPage from "./pages/NoticesPage";
 import ContactPage from "./pages/ContactPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 export default function App() {
   return (
@@ -18,10 +19,8 @@ export default function App() {
         <Route path="gallery" element={<GalleryPage />} />
         <Route path="notices" element={<NoticesPage />} />
         <Route path="contact" element={<ContactPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
-
-      {/* Catch-all route returns to Home */}
-      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }

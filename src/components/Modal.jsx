@@ -65,9 +65,9 @@ export default function Modal({ isOpen, onClose, title, children, maxWidth = "56
               position: "relative",
               width: "100%",
               maxWidth,
-              backgroundColor: "var(--surface)",
-              borderRadius: "var(--radius-lg)",
-              boxShadow: "var(--shadow-xl)",
+              backgroundColor: "var(--surface, #FFFFFF)",
+              borderRadius: "var(--radius-lg, 28px)",
+              boxShadow: "var(--shadow-xl, 0 20px 40px rgba(0,0,0,0.12))",
               overflow: "hidden",
               zIndex: 1001,
               maxHeight: "90vh",
@@ -82,21 +82,21 @@ export default function Modal({ isOpen, onClose, title, children, maxWidth = "56
                 alignItems: "center",
                 justifyContent: "space-between",
                 padding: "1.25rem 1.5rem",
-                borderBottom: "1px solid var(--border)",
-                backgroundColor: "var(--surface-alt)"
+                borderBottom: "1px solid var(--border, #E7E5E4)",
+                backgroundColor: "var(--surface-alt, #FDFCF8)"
               }}
             >
-              <h3 style={{ fontSize: "1.2rem", fontWeight: 700, color: "var(--primary)" }}>{title}</h3>
+              <h3 style={{ fontSize: "1.2rem", fontWeight: 700, color: "var(--primary, #292524)" }}>{title}</h3>
               <button
                 onClick={onClose}
                 aria-label="Close modal"
                 style={{
                   fontSize: "1.5rem",
                   lineHeight: 1,
-                  color: "var(--text-muted)",
+                  color: "var(--text-muted, #78716C)",
                   width: "36px",
                   height: "36px",
-                  borderRadius: "var(--radius-sm)",
+                  borderRadius: "var(--radius-sm, 10px)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center"
