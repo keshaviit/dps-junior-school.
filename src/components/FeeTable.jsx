@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { DownloadIcon, CheckIcon } from "./Icons";
 
 export default function FeeTable() {
@@ -97,13 +98,22 @@ export default function FeeTable() {
       </html>
     `;
     const win = window.open("", "_blank");
+    if (!win) {
+      toast.error("Pop-up blocked by your browser. Please allow pop-ups to open the fee document.");
+      return;
+    }
     win.document.write(printContent);
     win.document.close();
     win.focus();
     setTimeout(() => {
-      win.print();
+      try {
+        win.print();
+      } catch (err) {
+        console.warn("Print dialog closed or unavailable:", err);
+      }
     }, 500);
     setDownloaded(true);
+    toast.success("Official Fee Schedule opened in print view.");
   };
 
   return (

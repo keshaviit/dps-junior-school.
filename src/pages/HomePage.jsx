@@ -17,21 +17,8 @@ import {
 } from "../components/Icons";
 import StoryModal from "../components/StoryModal";
 import { sendFormEmail } from "../data/school";
-
-const palette = {
-  paper: "#FDFCF8",
-  ink: "#292524",
-  muted: "#78716C",
-  coral: "#FFB7B2",
-  coralDark: "#9C514E",
-  blush: "#FFE4E1",
-  sage: "#E8EFE8",
-  lavender: "#EFEDF4",
-  sunshine: "#F8D97A",
-  sky: "#CFE8F3",
-  line: "#E7E5E4",
-  white: "#FFFFFF",
-};
+import palette from "../theme/palette";
+import { scrollToElement } from "../utils/scroll";
 
 const classroomImage =
   "https://images.unsplash.com/photo-1761208663763-c4d30657c910?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=85&w=1600";
@@ -234,13 +221,7 @@ export default function HomePage() {
   const [activeChip, setActiveChip] = useState("Make");
   const [storyModalOpen, setStoryModalOpen] = useState(false);
 
-  const scrollTo = (id) => {
-    const el = document.getElementById(id);
-    if (el) {
-      const top = el.getBoundingClientRect().top + window.scrollY - 86;
-      window.scrollTo({ top, behavior: "smooth" });
-    }
-  };
+  const scrollTo = (id) => scrollToElement(id);
 
   const submitInterest = async (e) => {
     e.preventDefault();
@@ -516,6 +497,8 @@ export default function HomePage() {
             <img
               src={classroomImage}
               alt="Young children playing and learning together in a bright classroom"
+              loading="lazy"
+              decoding="async"
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
 
