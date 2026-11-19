@@ -133,7 +133,6 @@ export default function AdmissionsPage() {
                 name: "Foundational Pre-Primary",
                 tagline: "Playgroup, Nursery, LKG & UKG",
                 desc: "Guided by early childhood sensory exploration: mud kitchens, phonics, music rhythm, nature walks, and joyful social habits in warm, sunlit nursery cottages.",
-                ratio: "1:6 mentor ratio",
                 color: palette.blush,
                 accent: palette.coralDark
               },
@@ -142,7 +141,6 @@ export default function AdmissionsPage() {
                 name: "Preparatory & Primary Wing",
                 tagline: "Class 1 through Class 5",
                 desc: "Building rock-solid conceptual mastery in Mathematics, English & Hindi literacy, Environmental Studies (EVS), hands-on STEM experiments, and computer coding.",
-                ratio: "1:8 mentor ratio",
                 color: palette.sage,
                 accent: "#5F7B67"
               },
@@ -150,8 +148,7 @@ export default function AdmissionsPage() {
                 badge: "AGES 11–14 (CLASSES VI – VIII)",
                 name: "Middle School Wing",
                 tagline: "Class 6 through Class 8",
-                desc: "CBSE curriculum integrated with specialized Physics, Chemistry, Biology labs, advanced mathematics, Third Language (Sanskrit/French), robotics, and fixture sports.",
-                ratio: "1:10 mentor ratio",
+                desc: "An integrated curriculum with specialized Physics, Chemistry, Biology labs, advanced mathematics, Third Language (Sanskrit/French), robotics, and fixture sports.",
                 color: palette.lavender,
                 accent: "#776C9B"
               }
@@ -195,10 +192,6 @@ export default function AdmissionsPage() {
                     {prog.desc}
                   </p>
                 </div>
-                <div style={{ marginTop: "24px", paddingTop: "16px", borderTop: "1px solid #F5F5F4", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontSize: "13px", fontWeight: 600, color: palette.ink }}>{prog.ratio}</span>
-                  <span style={{ fontSize: "12px", color: palette.muted }}>Max 10 per group</span>
-                </div>
               </div>
             ))}
           </div>
@@ -238,6 +231,16 @@ export default function AdmissionsPage() {
                 step: "04",
                 title: "Gentle Welcome",
                 desc: "Receive your enrollment pack and a customized settling-in schedule designed so your child feels completely secure."
+              },
+              {
+                step: "05",
+                title: "Morning Prayer",
+                desc: "We begin the school day together with prayer and a moment of gratitude before classes start."
+              },
+              {
+                step: "06",
+                title: "Afternoon Prayer",
+                desc: "We close the school day with prayer and a quiet moment of reflection before heading home."
               }
             ].map((st) => (
               <div

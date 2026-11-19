@@ -19,7 +19,7 @@ export default function FeeTable() {
       admissionFee: "₹12,000",
       quarterlyTuition: "₹9,000",
       annualCharges: "₹5,000",
-      features: ["CBSE foundational curriculum", "Smart board digital content", "Computer & coding lab", "Sports & performing arts"]
+      features: ["Foundational curriculum", "Smart board digital content", "Computer & coding lab", "Sports & performing arts"]
     },
     {
       group: "Middle Wing",
@@ -50,7 +50,7 @@ export default function FeeTable() {
         </head>
         <body>
           <h1>DPS JUNIOR PUBLIC SCHOOL, BAGHPAT</h1>
-          <p class="sub">Affiliated under CBSE Standards | Playgroup to Class VIII | Academic Session 2026-27</p>
+          <p class="sub">Playgroup to Class VIII | Academic Session 2026-27</p>
           <h3>Approved Fee Schedule & Schedule of Payments</h3>
           <table>
             <thead>
@@ -91,7 +91,7 @@ export default function FeeTable() {
             1. Tuition fees are payable quarterly by the 10th of April, July, October, and January.<br/>
             2. Transport charges are optional and calculated based on route distance (0–5 km, 5–10 km, 10+ km).<br/>
             3. Sibling discount of 10% applies on quarterly tuition for the second child.<br/>
-            4. For fee queries, contact admissions: admissions@dpsjunior.edu.in | +91 98765 43210.
+            4. For fee queries, contact admissions: +91 9359159934.
           </div>
         </body>
       </html>

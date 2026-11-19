@@ -38,20 +38,20 @@ const classroomImage =
 
 const faqs = [
   {
-    q: "What classes and ages does DPS Junior welcome?",
-    a: "We welcome learners from ages 2 to 14 across Playgroup, Nursery, LKG, UKG, Primary Wing (Classes 1–5), and Middle Wing (Classes 6–8) following CBSE standards.",
+    q: "Which classes are open for admission?",
+    a: "DPS Junior welcomes children from Playgroup, Nursery, LKG and UKG through Classes 1 to 8. Please contact admissions to discuss the right class for your child.",
   },
   {
-    q: "What does a typical school day feel like?",
-    a: "Days move between focused academic masterclasses, experiential STEM labs, outdoor parkland time, shared meals, and reflection. We value rhythm over rush.",
+    q: "What is a normal school day like for my child?",
+    a: "The day includes morning prayer, classroom learning, activities and time to play. Children finish with afternoon prayer before going home.",
   },
   {
-    q: "How do you support different learning styles?",
-    a: "Teachers plan with multiple ways to listen, make, move, and express understanding. Families and educators build a support plan together.",
+    q: "What if my child needs extra help with studies?",
+    a: "Please speak with your child's teacher about any concerns. Teachers can explain how your child is doing and discuss ways to support learning at school and at home.",
   },
   {
-    q: "Can families visit before applying?",
-    a: "Absolutely. Join a small-group open morning, meet educators, and see a real day in motion before deciding whether DPS Junior feels right.",
+    q: "Can we visit the school before taking admission?",
+    a: "Yes. You can request a campus visit to see the school and speak with the admissions team before applying.",
   },
 ];
 
@@ -246,12 +246,16 @@ export default function HomePage() {
     e.preventDefault();
     const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
     if (valid) {
-      sendFormEmail(`Open Morning Lead - ${email.trim()}`, {
+      const sent = await sendFormEmail(`Open Morning Lead - ${email.trim()}`, {
         "Parent Email": email.trim(),
         "Source": "Homepage Quick Interest Bar"
       });
-      setFormMessage("Thank you! We’ll send open morning details to your inbox soon.");
-      setEmail("");
+      if (sent) {
+        setFormMessage("Thank you! Your interest has been recorded.");
+        setEmail("");
+      } else {
+        setFormMessage("We could not record your interest. Please call admissions at +91 9359159934.");
+      }
     } else {
       setFormMessage("Please enter a valid email address.");
     }
@@ -384,7 +388,7 @@ export default function HomePage() {
                 textTransform: "uppercase"
               }}
             >
-              PLAYGROUP TO CLASS VIII · CBSE STANDARDS · AGES 2–14
+              PLAYGROUP TO CLASS VIII · AGES 2–14
             </span>
           </motion.div>
 
@@ -421,7 +425,7 @@ export default function HomePage() {
               margin: "24px auto 0"
             }}
           >
-            An inspiring CBSE prep school from Playgroup to Class 8, where curious young minds build solid conceptual foundations in academics, nature inquiry, and enduring values.
+            An inspiring school from Playgroup to Class 8, where curious young minds build solid conceptual foundations in academics, nature inquiry, and enduring values.
           </motion.p>
 
           {/* Play Chips */}
@@ -695,8 +699,8 @@ export default function HomePage() {
                 script="often ask."
                 body="If your question isn’t here, we’d love to hear from you."
               />
-              <a
-                href="mailto:admissions@dpsjunior.edu.in"
+              <Link
+                to="/contact"
                 style={{
                   display: "inline-block",
                   fontSize: "15px",
@@ -707,8 +711,8 @@ export default function HomePage() {
                   marginTop: "24px"
                 }}
               >
-                admissions@dpsjunior.edu.in
-              </a>
+                Contact admissions →
+              </Link>
             </div>
 
             {/* Right Accordion List */}

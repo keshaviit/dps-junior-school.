@@ -24,7 +24,8 @@ export async function sendFormEmail(subject, data) {
         ...data
       })
     });
-    return res.ok;
+    const result = await res.json();
+    return res.ok && result.success === true;
   } catch (err) {
     console.error("Form email dispatch error:", err);
     return false;
@@ -37,35 +38,23 @@ export const schoolData = {
   logoText: "DPS JUNIOR",
   tagline: "An Adventure in Learning • Inspiring Young Hearts & Curious Minds",
   established: 2004,
-  affiliation: "Affiliated to Central Board of Secondary Education (CBSE), New Delhi",
-  affiliationNo: "CBSE/AFF/2130894",
   gradeSpan: "Playgroup to Class VIII (Play to 8 • Ages 2 to 14 Years)",
   awardBadge: "Awarded 'Best Progressive Prep School in Foundational & Middle Pedagogy 2026'",
   heroVideoUrl: "https://assets.mixkit.co/videos/preview/mixkit-children-reading-and-learning-together-41315-large.mp4",
   campusSize: "Green Parkland Campus, Science & Tinkering Labs, Natural Woodlands",
 
-  principal: {
-    name: "Dr. Arvind S. Sharma",
-    qualification: "M.Sc., M.Ed., Ph.D. in Early Childhood & Elementary Education",
-    title: "Head of School & Director of Pedagogy",
-    message: "At DPS JUNIOR PUBLIC SCHOOL, our journey extends from the first giggles of Playgroup through the confident, inquisitive leadership of Class 8. Aligned with Indian educational standards and CBSE experiential guidelines, we ensure childhood is never rushed. In our sunlit classrooms and discovery grounds, children learn to question courageously, think critically, and grow with deep moral roots."
-  },
-
   contact: {
-    address: "DPS Junior Campus, Woodlands Park, Sector 24, Urban Estate, Gurugram, Haryana - 122002",
-    phone: "+91 98765 43210",
-    altPhone: "+91 124 2345678",
-    email: "admissions@dpsjunior.edu.in",
-    admissionsEmail: "admissions@dpsjunior.edu.in",
-    officeEmail: "info@dpsjunior.edu.in",
+    address: "Street No. 7, Meerut, Rd, Arya Nagar, Baghpat, Uttar Pradesh 250609",
+    phone: "+91 9359159934",
+    altPhone: "+91 9759636301",
+    mapUrl: "https://www.google.com/maps/dir//D.P.S.+Junior+Public+School+Baghpat,+Street+No.+7,+Meerut,+Rd,+Arya+Nagar,+Baghpat,+Uttar+Pradesh+250609/@28.6182658,77.0449321,15z/data=!4m8!4m7!1m0!1m5!1m1!1s0x390c530db8fa598b:0xd84ffdda7127eb2d!2m2!1d77.2262543!2d28.9447308?entry=ttu&g_ep=EgoyMDI2MTExNi4wIKXMDSoASAFQAw%3D%3D",
     officeHours: "Monday to Saturday: 8:00 AM – 3:30 PM (Second Saturdays Off)",
-    mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d112217.9255234509!2d77.01859364999999!3d28.4594965!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d19d582e38859%3A0x2cf5fe8e5c64b1e!2sGurugram%2C%20Haryana!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+    mapEmbedUrl: "https://www.google.com/maps?q=28.9447308,77.2262543&output=embed"
   },
 
   // Ready Image Slots (will be populated with images shared by the user)
   images: {
     hero: "https://images.unsplash.com/photo-1761208663763-c4d30657c910?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=85&w=1600",
-    headmaster: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80",
     campus: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80",
     playgroup: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=800&q=80",
     middleSchool: "https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80"
@@ -104,7 +93,7 @@ export const schoolData = {
       title: "Middle School Wing",
       subtitle: "Critical Thinking, Discovery & Leadership",
       description: "Classes 6 through 8 prepare young scholars for senior board excellence with specialized labs for Physics, Chemistry, Biology, Advanced Mathematics, Social Sciences, Third Language (Sanskrit/French), robotics, and fixture sports.",
-      highlights: ["Classes 6, 7 and 8 (Junior High)", "CBSE Integrated Curriculum & Lab Practicals", "Robotics, AI & Coding Workbench", "Inter-school debates, theatre & competitive sports"],
+      highlights: ["Classes 6, 7 and 8 (Junior High)", "Integrated Curriculum & Lab Practicals", "Robotics, AI & Coding Workbench", "Inter-school debates, theatre & competitive sports"],
       image: "https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80"
     }
   ],
@@ -131,7 +120,7 @@ export const schoolData = {
       role: "Parents of Ananya (Class VII) & Kabir (Nursery)"
     },
     {
-      quote: "DPS Junior strikes the perfect balance of strong CBSE academic rigor and joyful, unhurried childhood. Our son is himself here, confident and curious.",
+      quote: "DPS Junior strikes the perfect balance of strong academics and joyful, unhurried childhood. Our son is himself here, confident and curious.",
       author: "David & Meera Richardson",
       role: "Parents of Liam (Class V)"
     },
@@ -142,7 +131,7 @@ export const schoolData = {
     }
   ],
 
-  // Gallery Photos — categorized for Indian Playgroup to Class VIII CBSE standards
+  // Gallery Photos — categorized for Playgroup to Class VIII
   gallery: [
     {
       id: 1,

@@ -12,17 +12,17 @@ When parents submit their inquiry, the website formats the child and parent deta
 `https://wa.me/91XXXXXXXXXX?text=...`
 
 ### To update the school's WhatsApp phone number:
-Open `src/components/InquiryForm.jsx` and `src/pages/AboutPage.jsx`:
+Open `src/components/InquiryForm.jsx`:
 ```javascript
 // Replace with the school's 10-digit phone number with '91' country code:
-const schoolWhatsAppNumber = "919876543210"; 
+const schoolWhatsAppNumber = "919359159934";
 ```
 
 ---
 
 ## 2. How Email Trigger Works (Zero Backend)
 
-To receive an email directly in `admissions@dpsjunior.edu.in` or `dpsjuniorbaghpat@gmail.com`:
+The school email address is pending. Configure the recipient with Web3Forms after the school provides the correct address:
 
 ### Recommended Free Service: Web3Forms (Takes 2 minutes)
 1. Go to **[https://web3forms.com](https://web3forms.com)**.

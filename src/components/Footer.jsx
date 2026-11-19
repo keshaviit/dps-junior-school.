@@ -92,7 +92,7 @@ export default function Footer() {
             marginTop: "10px"
           }}
         >
-          An Adventure in Learning • Playgroup to Class VIII (CBSE Affiliated)
+          An Adventure in Learning • Playgroup to Class VIII
         </p>
       </div>
 

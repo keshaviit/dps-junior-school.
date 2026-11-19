@@ -1,11 +1,11 @@
 # DPS JUNIOR PUBLIC SCHOOL | Official Institutional Website
 
-The official public website for **DPS Junior Public School, Baghpat** (Playgroup to Class VIII, CBSE Standards).
+The official public website for **DPS Junior Public School, Baghpat** (Playgroup to Class VIII).
 
 ## 🌟 Highlights & Features
 * **Academic Curriculum:** Comprehensive curriculum showcase from Playgroup to Class VIII.
 * **Admissions & Fee Schedule:** Transparent tuition breakdown table + one-click official PDF schedule download.
-* **Instant Inquiries:** Form submission with structured **WhatsApp (`wa.me`)** prefill and direct Email dispatch.
+* **Instant Inquiries:** Form submission with structured **WhatsApp (`wa.me`)** prefill.
 * **Campus Life Gallery:** Categorized photo gallery with full-screen Lightbox modal.
 * **Staff Portal CTA:** Prominent navigation button linking to the [Enterprise Management Portal](https://github.com/keshaviit/portal).
 

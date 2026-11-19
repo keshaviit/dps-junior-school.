@@ -14,8 +14,7 @@ export default function InquiryForm({ defaultGrade = "Class 1" }) {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const schoolWhatsAppNumber = "919876543210"; // Admissions desk WhatsApp
-  const schoolEmail = "admissions@dpsjunior.edu.in";
+  const schoolWhatsAppNumber = "919359159934"; // Admissions desk WhatsApp
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -60,21 +59,12 @@ export default function InquiryForm({ defaultGrade = "Class 1" }) {
     }, 400);
   };
 
-  const handleEmailDirect = () => {
-    const subject = encodeURIComponent(`Admission Inquiry for ${formData.grade} - ${formData.parentName}`);
-    const body = encodeURIComponent(
-      `Dear Admissions Desk,\n\nI am inquiring about admission at DPS Junior Public School.\n\n` +
-      `Parent Name: ${formData.parentName}\nPhone: ${formData.phone}\nGrade: ${formData.grade}\nMessage: ${formData.message}\n`
-    );
-    window.location.href = `mailto:${schoolEmail}?subject=${subject}&body=${body}`;
-  };
-
   return (
     <div className="bg-white rounded-3xl p-6 md:p-8 border border-[#E6E2DD] shadow-sm">
       <div className="mb-6">
         <h3 className="text-xl font-bold text-[#264E52]">Admissions & Visit Inquiry</h3>
         <p className="text-xs text-slate-500 mt-1">
-          Submit below to instantly connect with our Admissions Coordinator via WhatsApp or Email.
+          Submit below to connect with our Admissions Coordinator via WhatsApp.
         </p>
       </div>
 
@@ -93,12 +83,6 @@ export default function InquiryForm({ defaultGrade = "Class 1" }) {
               className="text-xs font-semibold text-emerald-800 underline"
             >
               Send Another Inquiry
-            </button>
-            <button
-              onClick={handleEmailDirect}
-              className="text-xs font-semibold text-slate-600 underline"
-            >
-              Send via Email instead
             </button>
           </div>
         </div>
@@ -187,13 +171,6 @@ export default function InquiryForm({ defaultGrade = "Class 1" }) {
             >
               <span>{loading ? "Preparing WhatsApp..." : "Send Inquiry on WhatsApp"}</span>
               <ArrowRight size={16} color="white" />
-            </button>
-            <button
-              type="button"
-              onClick={handleEmailDirect}
-              className="inline-flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 py-3 px-5 rounded-xl font-semibold text-sm transition-all cursor-pointer"
-            >
-              Send via Email
             </button>
           </div>
         </form>

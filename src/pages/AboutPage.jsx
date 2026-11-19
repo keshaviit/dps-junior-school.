@@ -76,7 +76,7 @@ export default function AboutPage() {
     }
 
     setSubmitting(true);
-    await sendFormEmail(`Campus Visit Booking - ${formData.parentName} (${formData.childName})`, {
+    const sent = await sendFormEmail(`Campus Visit Booking - ${formData.parentName} (${formData.childName})`, {
       "Parent Name": formData.parentName,
       "Child Name": formData.childName,
       "Child Age": formData.childAge,
@@ -89,7 +89,11 @@ export default function AboutPage() {
       "Special Notes": formData.notes || "None provided"
     });
     setSubmitting(false);
-    setFormSubmitted(true);
+    if (sent) {
+      setFormSubmitted(true);
+    } else {
+      setFormError("We could not send your visit request. Please call admissions at +91 9359159934.");
+    }
   };
 
   return (
@@ -239,97 +243,61 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 3. HEAD OF SCHOOL MESSAGE */}
-      <section style={{ padding: "80px 0", backgroundColor: "#F7F4EE" }}>
-        <div className="container" style={{ maxWidth: "1060px" }}>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-              gap: "50px",
-              alignItems: "center"
-            }}
-          >
-            {/* Portrait Frame */}
-            <div style={{ position: "relative" }}>
-              <div
-                style={{
-                  width: "100%",
-                  height: "420px",
-                  borderRadius: "40px",
-                  overflow: "hidden",
-                  boxShadow: "0 16px 36px rgba(0,0,0,0.08)",
-                  backgroundColor: palette.sage
-                }}
-              >
-                <img
-                  src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80"
-                  alt="Dr. Arvind S. Sharma, Head of School"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
+      {/* 3. SCHOOL LEADERSHIP */}
+      {[
+        {
+          role: "Manager",
+          name: "Mr. Nitin Kumar Manav",
+          initials: "NM",
+          heading: "Message from the Manager",
+          paragraphs: [
+            "Education is the most powerful tool we can use to shape the future, and it begins with building a strong foundation in the early years. At DPS Junior Public School, Baghpat, our mission is to foster holistic development—balancing academics, creativity, discipline, and values.",
+            "We strive to create a nurturing second home for our students, empowering them to dream big and grow into responsible citizens. Thank you for entrusting us with your child’s foundational journey."
+          ],
+          closing: "Best wishes,"
+        },
+        {
+          role: "Principal",
+          name: "Nupur Sharma",
+          initials: "NS",
+          heading: "From the Principal’s Desk",
+          salutation: "Dear Parents, Students, and Visitors,",
+          paragraphs: [
+            "Welcome to the official website of DPS Junior Public School, Baghpat.",
+            "Having had the privilege of serving as the Principal of this wonderful institution for the past 12 years, I have witnessed firsthand the transformative power of nurturing young minds with care, patience, and purpose. Over the last decade and more, watching batches of curious little learners blossom into confident, responsible, and compassionate individuals has been my greatest reward.",
+            "At DPS Junior Public School, we believe that early education lays the true foundation for life. Along with strong academic fundamentals, we place equal emphasis on moral values, discipline, creativity, and emotional well-being. Supported by a team of dedicated and passionate educators, we ensure every child feels safe, valued, and inspired to explore their unique potential.",
+            "The unwavering trust and partnership of our parents over these 12 years have been the backbone of our journey. Together, let us continue to give our children the roots of strong values and the wings of knowledge."
+          ],
+          closing: "Warm regards,"
+        }
+      ].map((leader, index) => (
+        <section className="leadership-section" key={leader.role} aria-labelledby={`leader-${leader.role.toLowerCase()}`}>
+          <div className="container leadership-container">
+            <article className="leadership-card">
+              <div className="leadership-identity">
+                <span className="leadership-number">0{index + 1} / 02</span>
+                <div className="leadership-monogram" aria-hidden="true">{leader.initials}</div>
+                <p className="leadership-role">{leader.role}</p>
+                <h2 id={`leader-${leader.role.toLowerCase()}`} className="leadership-name">{leader.name}</h2>
+                <p className="leadership-school">DPS Junior Public School<br />Baghpat</p>
               </div>
-
-              {/* Tape sticker effect */}
-              <div
-                style={{
-                  position: "absolute",
-                  left: "20px",
-                  bottom: "-15px",
-                  backgroundColor: "rgba(253, 252, 248, 0.96)",
-                  backdropFilter: "blur(8px)",
-                  padding: "14px 22px",
-                  borderRadius: "20px",
-                  boxShadow: "0 6px 18px rgba(0,0,0,0.08)"
-                }}
-              >
-                <div style={{ fontFamily: "var(--font-script)", fontSize: "24px", color: palette.ink, lineHeight: 1 }}>
-                  Dr. Arvind S. Sharma
+              <div className="leadership-letter">
+                <span className="leadership-eyebrow">A MESSAGE TO OUR SCHOOL COMMUNITY</span>
+                <h3 className="leadership-heading">{leader.heading}</h3>
+                {leader.salutation && <p className="leadership-salutation">{leader.salutation}</p>}
+                <div className="leadership-copy">
+                  {leader.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
                 </div>
-                <div style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "1.1px", color: palette.muted, marginTop: "4px" }}>
-                  HEAD OF SCHOOL & PEDAGOGY
+                <div className="leadership-signature">
+                  <span>{leader.closing}</span>
+                  <strong>{leader.name}</strong>
+                  <span>{leader.role}, DPS Junior Public School, Baghpat</span>
                 </div>
               </div>
-            </div>
-
-            {/* Note Quote */}
-            <div>
-              <div style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "1.8px", color: palette.coralDark, textTransform: "uppercase" }}>
-                A NOTE FROM OUR HEAD OF SCHOOL
-              </div>
-              <h2
-                style={{
-                  fontSize: "36px",
-                  fontWeight: 500,
-                  lineHeight: 1.18,
-                  letterSpacing: "-1px",
-                  color: palette.ink,
-                  marginTop: "14px"
-                }}
-              >
-                "We don't teach to tests; <br />
-                we teach to <span className="script-heading">spark lifelong joy."</span>
-              </h2>
-              <p style={{ fontSize: "16px", lineHeight: "27px", color: palette.muted, marginTop: "18px" }}>
-                Welcome to DPS JUNIOR PUBLIC SCHOOL. When families step onto our campus, they often tell us they feel an immediate sense of calm and breathing room.
-                That feeling is deliberate.
-              </p>
-              <p style={{ fontSize: "16px", lineHeight: "27px", color: palette.muted, marginTop: "14px" }}>
-                Our classrooms are filled with natural sunlight, tactile building blocks, paints, open-ended books, and botanical samples. Here, children learn math through weighing seeds, science through pond-dipping, and emotional courage through collaborative storytelling.
-              </p>
-              <div style={{ marginTop: "24px" }}>
-                <a
-                  href="#book-visit"
-                  className="pill-button pill-button-coral"
-                  style={{ display: "inline-flex" }}
-                >
-                  <span>Schedule a personal walk with the Head of School</span>
-                  <ArrowRight size={16} color={palette.ink} />
-                </a>
-              </div>
-            </div>
+            </article>
           </div>
-        </div>
-      </section>
+        </section>
+      ))}
 
       {/* 4. THE COMPLETE VISIT BOOKING FORM (CRITICAL REQUIREMENT) */}
       <section
@@ -414,11 +382,11 @@ export default function AboutPage() {
                   </svg>
                 </div>
                 <h3 style={{ fontSize: "28px", fontWeight: 600, color: palette.ink, letterSpacing: "-0.5px" }}>
-                  Visit Reserved! We can't wait to meet you.
+                  Visit request sent! We can't wait to meet you.
                 </h3>
                 <p style={{ fontSize: "16px", color: palette.muted, marginTop: "12px", maxWidth: "520px", margin: "12px auto 0", lineHeight: "26px" }}>
                   Thank you, <strong>{formData.parentName}</strong>. We have received your tour request for <strong>{formData.childName}</strong>.
-                  A confirmation email and visitor guide have been sent to <strong>{formData.email}</strong>.
+                  Our admissions team will contact you about your visit.
                 </p>
                 <div style={{ marginTop: "32px" }}>
                   <button
@@ -439,7 +407,7 @@ export default function AboutPage() {
                     }}
                     className="pill-button pill-button-white"
                   >
-                    <span>Book another tour date</span>
+                    <span>Send another visit request</span>
                   </button>
                 </div>
               </motion.div>
