@@ -1,20 +1,19 @@
 import React from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { scrollToElement } from "../utils/scroll";
 
 export default function Footer() {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const PORTAL_URL = import.meta.env.VITE_PORTAL_URL || "https://dps-junior-school.onrender.com";
 
   const handleLink = (target) => {
     if (target.startsWith("/")) {
       if (target.includes("#")) {
         const [path, hash] = target.split("#");
         if (location.pathname === path) {
-          const el = document.getElementById(hash);
-          if (el) {
-            const top = el.getBoundingClientRect().top + window.scrollY - 86;
-            window.scrollTo({ top, behavior: "smooth" });
-          }
+          scrollToElement(hash);
         } else {
           navigate(target);
         }
@@ -23,11 +22,7 @@ export default function Footer() {
       }
     } else {
       if (location.pathname === "/") {
-        const el = document.getElementById(target);
-        if (el) {
-          const top = el.getBoundingClientRect().top + window.scrollY - 86;
-          window.scrollTo({ top, behavior: "smooth" });
-        }
+        scrollToElement(target);
       } else {
         navigate(`/#${target}`);
       }
@@ -135,8 +130,10 @@ export default function Footer() {
         >
           Book a Visit
         </button>
-        <Link
-          to="/login"
+        <a
+          href={PORTAL_URL}
+          target="_blank"
+          rel="noopener noreferrer"
           style={{
             fontFamily: "var(--font-sans)",
             fontWeight: 500,
@@ -145,8 +142,8 @@ export default function Footer() {
             textDecoration: "none"
           }}
         >
-          Staff Login
-        </Link>
+          Staff Login ↗
+        </a>
       </div>
 
       <div

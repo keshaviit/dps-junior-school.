@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { ArrowRight, CheckIcon } from "./Icons";
-import { sendFormEmail } from "../data/school";
+import { sendFormEmail, schoolData } from "../data/school";
 
 export default function InquiryForm({ defaultGrade = "Class 1" }) {
   const [formData, setFormData] = useState({
@@ -23,7 +24,7 @@ export default function InquiryForm({ defaultGrade = "Class 1" }) {
   const handleWhatsAppSubmit = (e) => {
     e.preventDefault();
     if (!formData.parentName || !formData.phone) {
-      alert("Please enter parent name and contact number.");
+      toast.error("Please enter parent name and contact number.");
       return;
     }
 
@@ -55,7 +56,7 @@ export default function InquiryForm({ defaultGrade = "Class 1" }) {
     setTimeout(() => {
       setLoading(false);
       setSubmitted(true);
-      window.open(waUrl, "_blank");
+      window.open(waUrl, "_blank", "noopener,noreferrer");
     }, 400);
   };
 
@@ -135,18 +136,11 @@ export default function InquiryForm({ defaultGrade = "Class 1" }) {
                 onChange={handleChange}
                 className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-300 focus:outline-none focus:border-[#264E52] focus:ring-1 focus:ring-[#264E52] bg-white"
               >
-                <option value="Playgroup">Playgroup (Age 2+)</option>
-                <option value="Nursery">Nursery (Age 3+)</option>
-                <option value="LKG">LKG (Age 4+)</option>
-                <option value="UKG">UKG (Age 5+)</option>
-                <option value="Class 1">Class 1</option>
-                <option value="Class 2">Class 2</option>
-                <option value="Class 3">Class 3</option>
-                <option value="Class 4">Class 4</option>
-                <option value="Class 5">Class 5</option>
-                <option value="Class 6">Class 6</option>
-                <option value="Class 7">Class 7</option>
-                <option value="Class 8">Class 8</option>
+                {schoolData.classesList.map((cls) => (
+                  <option key={cls.id} value={cls.name}>
+                    {cls.name} ({cls.age})
+                  </option>
+                ))}
               </select>
             </div>
           </div>

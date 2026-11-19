@@ -16,6 +16,7 @@
   /* Global Compatibility Variables */
   --bg: #FDFCF8;
   --surface: #FFFFFF;
+  --surface-alt: #FDFCF8;
   --text: #292524;
   --text-muted: #78716C;
   --border: #E7E5E4;
@@ -41,6 +42,7 @@
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
   --shadow-md: 0 4px 18px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.12);
   --shadow-coral: 0 10px 24px rgba(156, 81, 78, 0.22);
 
   --font-sans: 'Outfit', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;

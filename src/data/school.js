@@ -10,7 +10,7 @@ export const toDirectImageUrl = (url, useThumbnail = false) => {
   return url;
 };
 
-export const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY || "3656d22f-5a7b-49ab-9f60-580b82cde8a4";
+export const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
 
 export async function sendFormEmail(subject, data) {
   try {
