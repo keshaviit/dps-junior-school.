@@ -169,6 +169,30 @@ export default function ContactPage() {
                   alignItems: "flex-start"
                 }}
               >
+                <div style={{ fontSize: "24px" }}>✉️</div>
+                <div>
+                  <h4 style={{ color: palette.ink, fontSize: "17px", fontWeight: 600, marginBottom: "4px" }}>Email Inquiries</h4>
+                  <p style={{ fontSize: "14px", color: palette.muted }}>
+                    Official / Admissions:{" "}
+                    <a href={`mailto:${schoolData.contact.email}`} style={{ color: palette.coralDark, fontWeight: 700 }}>
+                      {schoolData.contact.email}
+                    </a>
+                  </p>
+                </div>
+              </div>
+
+              <div
+                style={{
+                  backgroundColor: palette.white,
+                  borderRadius: "24px",
+                  padding: "24px",
+                  border: "1px solid #ECEAE3",
+                  boxShadow: "0 4px 16px rgba(0,0,0,0.03)",
+                  display: "flex",
+                  gap: "16px",
+                  alignItems: "flex-start"
+                }}
+              >
                 <div style={{ fontSize: "24px" }}>🕒</div>
                 <div>
                   <h4 style={{ color: palette.ink, fontSize: "17px", fontWeight: 600, marginBottom: "4px" }}>Office Visiting Hours</h4>

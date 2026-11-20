@@ -20,8 +20,7 @@ import { sendFormEmail } from "../data/school";
 import palette from "../theme/palette";
 import { scrollToElement } from "../utils/scroll";
 
-const classroomImage =
-  "https://images.unsplash.com/photo-1761208663763-c4d30657c910?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=85&w=1600";
+const classroomImage = "/images/water_splash_day.jpg";
 
 const faqs = [
   {
@@ -500,7 +499,7 @@ export default function HomePage() {
           >
             <img
               src={classroomImage}
-              alt="Young children playing and learning together in a bright classroom"
+              alt="DPS Junior Public School Baghpat Students - Joyful Water Splash Day"
               loading="lazy"
               decoding="async"
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
@@ -521,10 +520,10 @@ export default function HomePage() {
               }}
             >
               <div style={{ fontFamily: "var(--font-script)", fontSize: "25px", color: palette.ink, lineHeight: 1 }}>
-                Play is serious learning
+                Learning is an adventure
               </div>
               <div style={{ fontFamily: "var(--font-sans)", fontSize: "9px", fontWeight: 700, letterSpacing: "1.2px", color: palette.muted, marginTop: "4px" }}>
-                SEEDLINGS ROOM · AGES 3–5
+                DPS JUNIOR · ARYA NAGAR, BAGHPAT
               </div>
             </div>
 
@@ -561,18 +560,6 @@ export default function HomePage() {
               </div>
             </div>
           </motion.div>
-
-          <div
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "10px",
-              color: "#A8A29E",
-              marginTop: "12px",
-              textAlign: "right"
-            }}
-          >
-            Photo by Rewired Digital on Unsplash
-          </div>
         </div>
       </section>
 

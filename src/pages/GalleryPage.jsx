@@ -139,8 +139,10 @@ export default function GalleryPage() {
                   referrerPolicy="no-referrer"
                   onError={(e) => {
                     const fallback = toDirectImageUrl(photo.url, true);
-                    if (e.currentTarget.src !== fallback) {
+                    if (e.currentTarget.src !== fallback && !e.currentTarget.src.includes("thumbnail")) {
                       e.currentTarget.src = fallback;
+                    } else if (!e.currentTarget.src.includes("/images/school_banner.jpg")) {
+                      e.currentTarget.src = "/images/school_banner.jpg";
                     }
                   }}
                   style={{
@@ -239,8 +241,10 @@ export default function GalleryPage() {
                   referrerPolicy="no-referrer"
                   onError={(e) => {
                     const fallback = toDirectImageUrl(activePhoto.url, true);
-                    if (e.currentTarget.src !== fallback) {
+                    if (e.currentTarget.src !== fallback && !e.currentTarget.src.includes("thumbnail")) {
                       e.currentTarget.src = fallback;
+                    } else if (!e.currentTarget.src.includes("/images/school_banner.jpg")) {
+                      e.currentTarget.src = "/images/school_banner.jpg";
                     }
                   }}
                   style={{ width: "100%", height: "auto", maxHeight: "68vh", objectFit: "contain", display: "block" }}

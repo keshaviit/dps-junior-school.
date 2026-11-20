@@ -87,7 +87,13 @@ export default function Footer() {
             marginTop: "10px"
           }}
         >
-          An Adventure in Learning • Playgroup to Class VIII
+          An Adventure in Learning • Playgroup to Class VIII •{" "}
+          <a
+            href="mailto:sharma.nupur0911@gmail.com"
+            style={{ color: "var(--palette-coralDark)", fontWeight: 600, textDecoration: "none" }}
+          >
+            sharma.nupur0911@gmail.com
+          </a>
         </p>
       </div>
 

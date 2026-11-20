@@ -1,6 +1,7 @@
 // Converts any Google Drive sharing/open link to a direct browser-renderable image URL
 export const toDirectImageUrl = (url, useThumbnail = false) => {
   if (!url) return "";
+  if (url.startsWith("/") || url.startsWith("./") || url.startsWith("data:")) return url;
   const id = url.match(/\/d\/([a-zA-Z0-9_-]+)/)?.[1] || url.match(/[?&]id=([a-zA-Z0-9_-]+)/)?.[1];
   if (id) {
     return useThumbnail
@@ -47,17 +48,29 @@ export const schoolData = {
     address: "Street No. 7, Meerut, Rd, Arya Nagar, Baghpat, Uttar Pradesh 250609",
     phone: "+91 9359159934",
     altPhone: "+91 9759636301",
+    email: "sharma.nupur0911@gmail.com",
+    admissionsEmail: "sharma.nupur0911@gmail.com",
+    officeEmail: "sharma.nupur0911@gmail.com",
     mapUrl: "https://www.google.com/maps/dir//D.P.S.+Junior+Public+School+Baghpat,+Street+No.+7,+Meerut,+Rd,+Arya+Nagar,+Baghpat,+Uttar+Pradesh+250609/@28.6182658,77.0449321,15z/data=!4m8!4m7!1m0!1m5!1m1!1s0x390c530db8fa598b:0xd84ffdda7127eb2d!2m2!1d77.2262543!2d28.9447308?entry=ttu&g_ep=EgoyMDI2MTExNi4wIKXMDSoASAFQAw%3D%3D",
     officeHours: "Monday to Saturday: 8:00 AM – 3:30 PM (Second Saturdays Off)",
     mapEmbedUrl: "https://www.google.com/maps?q=28.9447308,77.2262543&output=embed"
   },
 
-  // Ready Image Slots (will be populated with images shared by the user)
+  // Ready Image Slots (Populated with verified real school photos)
   images: {
-    hero: "https://images.unsplash.com/photo-1761208663763-c4d30657c910?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=85&w=1600",
-    campus: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80",
-    playgroup: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=800&q=80",
-    middleSchool: "https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80"
+    hero: "/images/water_splash_day.jpg",
+    campus: "/images/class8_batch.jpg",
+    playgroup: "/images/students_uniform.jpg",
+    middleSchool: "/images/school_excursion.jpg",
+    principal: "/images/principal_nupur_sharma.jpg"
+  },
+
+  principal: {
+    name: "Mrs. Nupur Sharma",
+    qualification: "M.A., B.Ed. • 12+ Years Dedicated Leadership",
+    title: "Principal, DPS Junior Public School Baghpat",
+    image: "/images/principal_nupur_sharma.jpg",
+    message: "At DPS JUNIOR PUBLIC SCHOOL, Baghpat, our journey extends from the first giggles of Playgroup through the confident, inquisitive leadership of Class 8. Aligned with Indian educational standards and CBSE experiential guidelines, we ensure childhood is never rushed. In our sunlit classrooms and discovery grounds, children learn to question courageously, think critically, and grow with deep moral roots."
   },
 
   stats: [
@@ -74,9 +87,9 @@ export const schoolData = {
       badge: "Ages 2 – 5 Years (Playgroup to UKG)",
       title: "Foundational Pre-Primary Wing",
       subtitle: "Play, Phonics & Sensory Wonder",
-      description: "Covering Playgroup, Nursery, LKG, and UKG. Guided by NEP foundational principles, children explore through tactile mud kitchens, story circles, music, sensory discovery, and joyful peer socialization.",
-      highlights: ["Playgroup, Nursery, LKG & UKG", "Gentle mentor ratio (1:6 in Nursery)", "Phonics, early numeracy & rhythm", "Daily outdoor nature & garden play"],
-      image: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=800&q=80"
+      description: "Covering Playgroup, Nursery, LKG, and UKG. Guided by NEP foundational principles, children explore through tactile sensory discovery, story circles, music, and joyful peer socialization.",
+      highlights: ["Playgroup, Nursery, LKG & UKG", "Gentle mentor ratio (1:6 in Nursery)", "Phonics, early numeracy & rhythm", "Daily outdoor play & activity zones"],
+      image: "/images/students_uniform.jpg"
     },
     {
       id: "preparatory",
@@ -84,17 +97,17 @@ export const schoolData = {
       title: "Preparatory & Primary Wing",
       subtitle: "Conceptual Clarity & Inquiring Minds",
       description: "Classes 1 through 5 build solid foundations in English literacy, Hindi, Mathematics, Environmental Studies (EVS), computer coding basics, visual arts, and athletic physical education.",
-      highlights: ["Classes 1, 2, 3, 4 and 5", "Hands-on STEM and Math Labs", "Bilingual proficiency & creative expression", "Public speaking & environmental projects"],
-      image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80"
+      highlights: ["Classes 1, 2, 3, 4 and 5", "Hands-on STEM and Math Labs", "Bilingual proficiency & creative expression", "Public speaking & art exhibitions"],
+      image: "/images/art_exhibition.jpg"
     },
     {
       id: "middle",
       badge: "Ages 11 – 14 Years (Classes VI – VIII)",
       title: "Middle School Wing",
       subtitle: "Critical Thinking, Discovery & Leadership",
-      description: "Classes 6 through 8 prepare young scholars for senior board excellence with specialized labs for Physics, Chemistry, Biology, Advanced Mathematics, Social Sciences, Third Language (Sanskrit/French), robotics, and fixture sports.",
-      highlights: ["Classes 6, 7 and 8 (Junior High)", "Integrated Curriculum & Lab Practicals", "Robotics, AI & Coding Workbench", "Inter-school debates, theatre & competitive sports"],
-      image: "https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80"
+      description: "Classes 6 through 8 prepare young scholars for senior board excellence with specialized labs for Science, Advanced Mathematics, Social Sciences, Computer/Coding, and competitive sports fixtures.",
+      highlights: ["Classes 6, 7 and 8 (Junior High)", "Integrated Curriculum & Lab Practicals", "Excursions, Heritage Tours & Quizzes", "Inter-school debates & competitive sports"],
+      image: "/images/class8_batch.jpg"
     }
   ],
 
@@ -131,63 +144,91 @@ export const schoolData = {
     }
   ],
 
-  // Gallery Photos — categorized for Playgroup to Class VIII
+  // Default Real School Gallery Photos — Populated with verified DPS Junior school photos
   gallery: [
     {
       id: 1,
-      title: "Playgroup Sensory Play",
-      caption: "Pre-primary toddlers developing tactile and motor skills with blocks and clay.",
-      category: "Playgroup & Kindergarten",
-      url: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=800&q=80"
+      title: "Class VIII Batch 2025–26",
+      caption: "Senior graduating Class 8 students with Principal Mrs. Nupur Sharma and faculty members.",
+      category: "Campus & Facilities",
+      url: "/images/class8_batch.jpg"
     },
     {
       id: 2,
-      title: "Janmashtami & Festive Celebrations",
-      caption: "Little scholars dressed as Krishna and Radha celebrating Indian cultural festivals.",
+      title: "Diwali Festivities & Rangoli",
+      caption: "Principal Mam and students celebrating Diwali with handmade Ram Mandir rangoli and traditional attire.",
       category: "Festivals & Celebrations",
-      url: "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?auto=format&fit=crop&w=800&q=80"
+      url: "/images/diwali_celebration.jpg"
     },
     {
       id: 3,
-      title: "Annual Sports Day & Races",
-      caption: "Track and field races, spoon race, and tug-of-war on Annual Sports Day.",
+      title: "Summer Water Splash Day",
+      caption: "Joyful water splash and pool activities promoting friendship, refreshment, and physical agility.",
       category: "Sports & Yoga",
-      url: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=800&q=80"
+      url: "/images/water_splash_day.jpg"
     },
     {
       id: 4,
-      title: "Smart Classroom Learning",
-      caption: "Interactive digital boards and collaborative group study in Class 4.",
-      category: "Classrooms & Labs",
-      url: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80"
+      title: "Children's Day Celebrations",
+      caption: "Joyful Children's Day activities, star craft badges, and classroom celebration.",
+      category: "Festivals & Celebrations",
+      url: "/images/childrens_day.jpg"
     },
     {
       id: 5,
-      title: "Annual Day Dance & Drama",
-      caption: "Students performing classical and folk dances on the grand Annual Day stage.",
-      category: "Art & Stage Events",
-      url: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?auto=format&fit=crop&w=800&q=80"
+      title: "Student Art & Painting Exhibition",
+      caption: "Young artists proudly showcasing their colorful canvas landscape paintings and creative artwork.",
+      category: "Classrooms & Activities",
+      url: "/images/art_exhibition.jpg"
     },
     {
       id: 6,
-      title: "Kindergarten Activity Corner",
-      caption: "Story circles, phonics games, and creative coloring in UKG.",
-      category: "Playgroup & Kindergarten",
-      url: "https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80"
+      title: "Historical Heritage Excursion",
+      caption: "Educational excursion tour exploring historic monuments with Principal Mam and teachers.",
+      category: "Campus & Facilities",
+      url: "/images/school_excursion.jpg"
     },
     {
       id: 7,
-      title: "Science & Robotics Tinkering Lab",
-      caption: "Hands-on experiential experiments and robotics models by Class 7 students.",
-      category: "Classrooms & Labs",
-      url: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80"
+      title: "Excellence & Merit Felicitation",
+      caption: "Student awarded championship trophy and certificate of honor with Principal Mam and dignitaries.",
+      category: "Annual Day & Stage",
+      url: "/images/award_ceremony.jpg"
     },
     {
       id: 8,
-      title: "Green Outdoor Playground",
-      caption: "Safe outdoor slides, swings, and morning PT assembly ground.",
-      category: "Campus & Play Area",
-      url: "https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=800&q=80"
+      title: "Foundational & Primary Learners",
+      caption: "Young students in smart DPS uniform enjoying their interactive classroom campus.",
+      category: "Playgroup & Kindergarten",
+      url: "/images/students_uniform.jpg"
+    },
+    {
+      id: 9,
+      title: "Morning Assembly & News Reading",
+      caption: "Disciplined morning assembly fostering focus, newspaper reading habits, and shared community values.",
+      category: "Campus & Facilities",
+      url: "/images/assembly_morning.jpg"
+    },
+    {
+      id: 10,
+      title: "Academic Recognition & Certificates",
+      caption: "Meritorious students felicitated with framed certificates of achievement on stage.",
+      category: "Annual Day & Stage",
+      url: "/images/graduation_felicitation.jpg"
+    },
+    {
+      id: 11,
+      title: "Drawing & Sketching Competition",
+      caption: "All-school creative expression competition fostering imagination and fine motor skills.",
+      category: "Classrooms & Activities",
+      url: "/images/art_competition.jpg"
+    },
+    {
+      id: 12,
+      title: "Eco-Awareness 'Save Earth' Poster",
+      caption: "Hands-on environmental poster making and creative thinking on nature conservation.",
+      category: "Classrooms & Activities",
+      url: "/images/creative_art.jpg"
     }
   ],
 

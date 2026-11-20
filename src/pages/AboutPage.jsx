@@ -178,6 +178,7 @@ export default function AboutPage() {
           role: "Manager",
           name: "Mr. Nitin Kumar Manav",
           initials: "NM",
+          photo: null,
           heading: "Message from the Manager",
           paragraphs: [
             "Education is the most powerful tool we can use to shape the future, and it begins with building a strong foundation in the early years. At DPS Junior Public School, Baghpat, our mission is to foster holistic development—balancing academics, creativity, discipline, and values.",
@@ -187,8 +188,10 @@ export default function AboutPage() {
         },
         {
           role: "Principal",
-          name: "Nupur Sharma",
+          name: "Mrs. Nupur Sharma",
           initials: "NS",
+          photo: "/images/principal_nupur_sharma.jpg",
+          email: "sharma.nupur0911@gmail.com",
           heading: "From the Principal’s Desk",
           salutation: "Dear Parents, Students, and Visitors,",
           paragraphs: [
@@ -205,10 +208,32 @@ export default function AboutPage() {
             <article className="leadership-card">
               <div className="leadership-identity">
                 <span className="leadership-number">0{index + 1} / 02</span>
-                <div className="leadership-monogram" aria-hidden="true">{leader.initials}</div>
+                {leader.photo ? (
+                  <img
+                    src={leader.photo}
+                    alt={leader.name}
+                    className="leadership-photo"
+                  />
+                ) : (
+                  <div className="leadership-monogram" aria-hidden="true">{leader.initials}</div>
+                )}
                 <p className="leadership-role">{leader.role}</p>
                 <h2 id={`leader-${leader.role.toLowerCase()}`} className="leadership-name">{leader.name}</h2>
                 <p className="leadership-school">DPS Junior Public School<br />Baghpat</p>
+                {leader.email && (
+                  <a
+                    href={`mailto:${leader.email}`}
+                    style={{
+                      marginTop: "12px",
+                      fontSize: "12px",
+                      color: "var(--palette-coralDark)",
+                      fontWeight: 600,
+                      wordBreak: "break-all"
+                    }}
+                  >
+                    {leader.email}
+                  </a>
+                )}
               </div>
               <div className="leadership-letter">
                 <span className="leadership-eyebrow">A MESSAGE TO OUR SCHOOL COMMUNITY</span>
@@ -221,6 +246,14 @@ export default function AboutPage() {
                   <span>{leader.closing}</span>
                   <strong>{leader.name}</strong>
                   <span>{leader.role}, DPS Junior Public School, Baghpat</span>
+                  {leader.email && (
+                    <a
+                      href={`mailto:${leader.email}`}
+                      style={{ color: "var(--palette-coralDark)", fontSize: "13px", marginTop: "4px" }}
+                    >
+                      ✉️ {leader.email}
+                    </a>
+                  )}
                 </div>
               </div>
             </article>
