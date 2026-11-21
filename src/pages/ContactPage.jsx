@@ -173,9 +173,15 @@ export default function ContactPage() {
                 <div>
                   <h4 style={{ color: palette.ink, fontSize: "17px", fontWeight: 600, marginBottom: "4px" }}>Email Inquiries</h4>
                   <p style={{ fontSize: "14px", color: palette.muted }}>
-                    Official / Admissions:{" "}
+                    Official / Principal:{" "}
                     <a href={`mailto:${schoolData.contact.email}`} style={{ color: palette.coralDark, fontWeight: 700 }}>
                       {schoolData.contact.email}
+                    </a>
+                  </p>
+                  <p style={{ fontSize: "14px", color: palette.muted, marginTop: "4px" }}>
+                    Management / Admin:{" "}
+                    <a href={`mailto:${schoolData.contact.altEmail}`} style={{ color: palette.coralDark, fontWeight: 700 }}>
+                      {schoolData.contact.altEmail}
                     </a>
                   </p>
                 </div>

@@ -94,6 +94,13 @@ export default function Footer() {
           >
             sharma.nupur0911@gmail.com
           </a>
+          {" • "}
+          <a
+            href="mailto:shreyanshmanav999@gmail.com"
+            style={{ color: "var(--palette-coralDark)", fontWeight: 600, textDecoration: "none" }}
+          >
+            shreyanshmanav999@gmail.com
+          </a>
         </p>
       </div>
 

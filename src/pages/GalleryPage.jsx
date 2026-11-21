@@ -18,7 +18,7 @@ export default function GalleryPage() {
         .then((data) => {
           if (Array.isArray(data) && data.length) setPhotos(data);
         })
-        .catch(() => {});
+        .catch(() => { });
       return;
     }
 
@@ -49,7 +49,7 @@ export default function GalleryPage() {
             setPhotos(cleaned);
           }
         })
-        .catch(() => {});
+        .catch(() => { });
     }
   }, [driveEnvUrl, isDriveFolder]);
 

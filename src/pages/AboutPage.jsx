@@ -179,6 +179,7 @@ export default function AboutPage() {
           name: "Mr. Nitin Kumar Manav",
           initials: "NM",
           photo: null,
+          email: "shreyanshmanav999@gmail.com",
           heading: "Message from the Manager",
           paragraphs: [
             "Education is the most powerful tool we can use to shape the future, and it begins with building a strong foundation in the early years. At DPS Junior Public School, Baghpat, our mission is to foster holistic development—balancing academics, creativity, discipline, and values.",

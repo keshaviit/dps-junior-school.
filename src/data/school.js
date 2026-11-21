@@ -12,8 +12,13 @@ export const toDirectImageUrl = (url, useThumbnail = false) => {
 };
 
 export const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
+export const APPS_SCRIPT_URL = import.meta.env.VITE_GOOGLE_DRIVE_GALLERY_URL;
+export const APPS_SCRIPT_URL = import.meta.env.VITE_GOOGLE_DRIVE_GALLERY_URL;
 
 export async function sendFormEmail(subject, data) {
+  let success = false;
+
+  // 1. Dispatch to Web3Forms
   try {
     const res = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
@@ -25,12 +30,35 @@ export async function sendFormEmail(subject, data) {
         ...data
       })
     });
-    const result = await res.json();
-    return res.ok && result.success === true;
+    const result = await res.json().catch(() => null);
+    if (res.ok && result?.success) {
+      success = true;
+    }
   } catch (err) {
-    console.error("Form email dispatch error:", err);
-    return false;
+    console.warn("Web3Forms dispatch error:", err);
   }
+
+  // 2. Dispatch to Google Apps Script (sends to both school emails via Gmail)
+  if (APPS_SCRIPT_URL && APPS_SCRIPT_URL.includes("script.google.com")) {
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          subject: subject,
+          timestamp: new Date().toISOString(),
+          ...data
+        })
+      });
+      // no-cors mode returns opaque response, treat as delivered
+      success = true;
+    } catch (scriptErr) {
+      console.warn("Apps Script dispatch note:", scriptErr);
+    }
+  }
+
+  return success;
 }
 
 export const schoolData = {
@@ -49,10 +77,12 @@ export const schoolData = {
     phone: "+91 9359159934",
     altPhone: "+91 9759636301",
     email: "sharma.nupur0911@gmail.com",
+    altEmail: "shreyanshmanav999@gmail.com",
+    emails: ["sharma.nupur0911@gmail.com", "shreyanshmanav999@gmail.com"],
     admissionsEmail: "sharma.nupur0911@gmail.com",
-    officeEmail: "sharma.nupur0911@gmail.com",
+    officeEmail: "shreyanshmanav999@gmail.com",
     mapUrl: "https://www.google.com/maps/dir//D.P.S.+Junior+Public+School+Baghpat,+Street+No.+7,+Meerut,+Rd,+Arya+Nagar,+Baghpat,+Uttar+Pradesh+250609/@28.6182658,77.0449321,15z/data=!4m8!4m7!1m0!1m5!1m1!1s0x390c530db8fa598b:0xd84ffdda7127eb2d!2m2!1d77.2262543!2d28.9447308?entry=ttu&g_ep=EgoyMDI2MTExNi4wIKXMDSoASAFQAw%3D%3D",
-    officeHours: "Monday to Saturday: 8:00 AM – 3:30 PM (Second Saturdays Off)",
+    officeHours: "Monday to Friday: 8:00 AM – 3:30 PM | Saturday: 8:00 AM – 2:00 PM (No Saturday Off)",
     mapEmbedUrl: "https://www.google.com/maps?q=28.9447308,77.2262543&output=embed"
   },
 
