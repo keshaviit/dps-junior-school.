@@ -34,7 +34,8 @@ export function useSEO({ title, description, canonical }) {
     // 3. Update Canonical Tag if path provided
     if (canonical) {
       let canonicalLink = document.querySelector('link[rel="canonical"]');
-      const fullUrl = `https://dpsjuniorbaghpat.vercel.app${canonical.startsWith("/") ? canonical : "/" + canonical}`;
+      const baseDomain = "https://www.dpsjuniorbaghpat.in";
+      const fullUrl = `${baseDomain}${canonical.startsWith("/") ? canonical : "/" + canonical}`;
       if (!canonicalLink) {
         canonicalLink = document.createElement("link");
         canonicalLink.setAttribute("rel", "canonical");

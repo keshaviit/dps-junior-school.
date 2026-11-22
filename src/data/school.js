@@ -81,6 +81,7 @@ export const schoolData = {
   campusSize: "Green Parkland Campus, Science & Tinkering Labs, Natural Woodlands",
 
   contact: {
+    website: "https://www.dpsjuniorbaghpat.in",
     address: "Street No. 7, Meerut, Rd, Arya Nagar, Baghpat, Uttar Pradesh 250609",
     phone: "+91 9359159934",
     altPhone: "+91 9759636301",
