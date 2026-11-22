@@ -3,8 +3,14 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, SchoolIcon } from "../components/Icons";
 import palette from "../theme/palette";
+import { useSEO } from "../utils/useSEO";
 
 export default function NotFoundPage() {
+  useSEO({
+    title: "404 - Page Not Found | DPS Junior Public School",
+    description: "The page you are looking for doesn't exist. Return to DPS Junior Public School home page."
+  });
+
   return (
     <div
       style={{

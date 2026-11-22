@@ -10,8 +10,15 @@ import {
   SchoolIcon
 } from "../components/Icons";
 import palette from "../theme/palette";
+import { useSEO } from "../utils/useSEO";
 
 export default function AdmissionsPage() {
+  useSEO({
+    title: "Admissions (Play to VIII) & Fee Schedule | DPS Junior Public School",
+    description: "Admissions open for Playgroup to Class VIII. Review our simple 4-step admission journey, transparent fee schedule, and book a campus tour.",
+    canonical: "/admissions"
+  });
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);

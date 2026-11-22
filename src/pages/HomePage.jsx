@@ -19,6 +19,7 @@ import StoryModal from "../components/StoryModal";
 import { sendFormEmail } from "../data/school";
 import palette from "../theme/palette";
 import { scrollToElement } from "../utils/scroll";
+import { useSEO } from "../utils/useSEO";
 
 const classroomImage =
   "https://images.unsplash.com/photo-1761208663763-c4d30657c910?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=85&w=1600";
@@ -215,6 +216,12 @@ function PhoneMockup({ tint, label, title, icon: Icon, offset = 0, faded = false
 }
 
 export default function HomePage() {
+  useSEO({
+    title: "DPS JUNIOR PUBLIC SCHOOL | Playgroup to Class VIII | An Adventure in Learning",
+    description: "An inspiring CBSE prep school from Playgroup to Class 8, where curious young minds build solid conceptual foundations in academics, nature inquiry, and enduring values.",
+    canonical: "/"
+  });
+
   const [openFaq, setOpenFaq] = useState(0);
   const [email, setEmail] = useState("");
   const [formMessage, setFormMessage] = useState("");
