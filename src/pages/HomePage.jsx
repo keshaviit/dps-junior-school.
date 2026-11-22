@@ -216,8 +216,8 @@ function PhoneMockup({ tint, label, title, icon: Icon, offset = 0, faded = false
 
 export default function HomePage() {
   useSEO({
-    title: "DPS JUNIOR PUBLIC SCHOOL | Playgroup to Class VIII | An Adventure in Learning",
-    description: "An inspiring CBSE prep school from Playgroup to Class 8, where curious young minds build solid conceptual foundations in academics, nature inquiry, and enduring values.",
+    title: "DPS Junior Public School Baghpat | DPS Junior | Playgroup to Class VIII",
+    description: "DPS Junior Public School Baghpat (DPS Junior) - CBSE prep school from Playgroup to Class 8 in Baghpat. Experiential learning, STEM, sports, and admissions open.",
     canonical: "/"
   });
 
