@@ -7,7 +7,13 @@ export default function GalleryPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [activePhoto, setActivePhoto] = useState(null);
 
-  const driveEnvUrl = (import.meta.env.VITE_GOOGLE_DRIVE_GALLERY_URL || import.meta.env.VITE_GALLERY_API_URL || "").trim();
+  const driveEnvUrl = (
+    import.meta.env.VITE_GOOGLE_DRIVE_GALLERY_URL ||
+    import.meta.env.GOOGLE_DRIVE_GALLERY_URL ||
+    import.meta.env.VITE_GALLERY_API_URL ||
+    import.meta.env.GALLERY_API_URL ||
+    ""
+  ).trim();
   const isDriveFolder = driveEnvUrl.includes("/drive/folders/") || driveEnvUrl.includes("drive.google.com/drive/u/");
 
   useEffect(() => {

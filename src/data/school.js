@@ -11,9 +11,17 @@ export const toDirectImageUrl = (url, useThumbnail = false) => {
   return url;
 };
 
-export const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
-export const APPS_SCRIPT_URL = import.meta.env.VITE_GOOGLE_DRIVE_GALLERY_URL;
-export const APPS_SCRIPT_URL = import.meta.env.VITE_GOOGLE_DRIVE_GALLERY_URL;
+export const WEB3FORMS_KEY = 
+  import.meta.env.VITE_WEB3FORMS_KEY || 
+  import.meta.env.WEB3FORMS_KEY || 
+  import.meta.env.WEB3_KEY ||
+  import.meta.env.WEB3;
+
+export const APPS_SCRIPT_URL = 
+  import.meta.env.VITE_GOOGLE_DRIVE_GALLERY_URL || 
+  import.meta.env.GOOGLE_DRIVE_GALLERY_URL ||
+  import.meta.env.VITE_GALLERY_API_URL ||
+  import.meta.env.GALLERY_API_URL;
 
 export async function sendFormEmail(subject, data) {
   let success = false;

@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
+  envPrefix: ['VITE_', 'WEB3', 'GOOGLE'],
   server: {
     port: 5173,
     proxy: {
