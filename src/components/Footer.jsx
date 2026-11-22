@@ -6,7 +6,7 @@ export default function Footer() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const PORTAL_URL = import.meta.env.VITE_PORTAL_URL || "https://dps-junior-school.onrender.com";
+  const PORTAL_URL = import.meta.env.VITE_PORTAL_URL || "https://portal.keshaviitgoyal.workers.dev/";
 
   const handleLink = (target) => {
     if (target.startsWith("/")) {
@@ -100,6 +100,15 @@ export default function Footer() {
             style={{ color: "var(--palette-coralDark)", fontWeight: 600, textDecoration: "none" }}
           >
             shreyanshmanav999@gmail.com
+          </a>
+          {" • "}
+          <a
+            href="https://www.instagram.com/dps.junior.baghpat/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "var(--palette-coralDark)", fontWeight: 600, textDecoration: "none" }}
+          >
+            Instagram: @dps.junior.baghpat
           </a>
         </p>
       </div>

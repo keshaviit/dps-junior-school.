@@ -471,13 +471,13 @@ export default function HomePage() {
               <ArrowRight size={17} color={palette.ink} />
             </button>
 
-            <button
-              onClick={() => setStoryModalOpen(true)}
+            <div
               className="pill-button pill-button-white"
+              style={{ cursor: "default", opacity: 0.9, pointerEvents: "none", userSelect: "none" }}
             >
               <span>Watch our story</span>
               <PlayIcon size={14} color={palette.ink} />
-            </button>
+            </div>
           </motion.div>
 
           {/* Hero Photo Wrap */}

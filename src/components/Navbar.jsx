@@ -7,7 +7,7 @@ export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const PORTAL_URL = import.meta.env.VITE_PORTAL_URL || "https://dps-junior-school.onrender.com";
+  const PORTAL_URL = import.meta.env.VITE_PORTAL_URL || "https://portal.keshaviitgoyal.workers.dev/";
 
   const handleNavClick = (target) => {
     setMobileMenuOpen(false);

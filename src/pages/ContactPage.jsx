@@ -207,6 +207,35 @@ export default function ContactPage() {
                   </p>
                 </div>
               </div>
+
+              <div
+                style={{
+                  backgroundColor: palette.white,
+                  borderRadius: "24px",
+                  padding: "24px",
+                  border: "1px solid #ECEAE3",
+                  boxShadow: "0 4px 16px rgba(0,0,0,0.03)",
+                  display: "flex",
+                  gap: "16px",
+                  alignItems: "flex-start"
+                }}
+              >
+                <div style={{ fontSize: "24px" }}>📸</div>
+                <div>
+                  <h4 style={{ color: palette.ink, fontSize: "17px", fontWeight: 600, marginBottom: "4px" }}>Instagram</h4>
+                  <p style={{ fontSize: "14px", color: palette.muted }}>
+                    Follow classroom reels & event updates:{" "}
+                    <a
+                      href={schoolData.contact.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: palette.coralDark, fontWeight: 700 }}
+                    >
+                      {schoolData.contact.instagramHandle}
+                    </a>
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
