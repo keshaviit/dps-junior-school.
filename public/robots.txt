@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dpsjuniorbaghpat.vercel.app/sitemap.xml

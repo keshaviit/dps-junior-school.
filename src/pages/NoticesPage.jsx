@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { schoolData } from "../data/school";
+import { useSEO } from "../utils/useSEO";
 
 export default function NoticesPage() {
+  useSEO({
+    title: "School Circulars & Official Notices | DPS Junior Public School",
+    description: "Official notifications, academic circulars, holiday schedules, examination notices, and parent advisories from DPS Junior Public School.",
+    canonical: "/notices"
+  });
+
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
 

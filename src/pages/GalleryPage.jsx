@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { schoolData, toDirectImageUrl } from "../data/school";
+import { useSEO } from "../utils/useSEO";
 
 export default function GalleryPage() {
+  useSEO({
+    title: "Campus Photo Gallery & Student Activities | DPS Junior Public School",
+    description: "Explore campus photos, play areas, smart classrooms, robotics labs, sports day moments, and cultural festivities at DPS Junior Public School.",
+    canonical: "/gallery"
+  });
+
   const [photos, setPhotos] = useState(schoolData.gallery || []);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [activePhoto, setActivePhoto] = useState(null);

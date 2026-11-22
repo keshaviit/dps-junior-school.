@@ -1,23 +1,16 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { schoolData, sendFormEmail } from "../data/school";
-
-const palette = {
-  paper: "#FDFCF8",
-  ink: "#292524",
-  muted: "#78716C",
-  coral: "#FFB7B2",
-  coralDark: "#9C514E",
-  blush: "#FFE4E1",
-  sage: "#E8EFE8",
-  lavender: "#EFEDF4",
-  sunshine: "#F8D97A",
-  sky: "#CFE8F3",
-  line: "#E7E5E4",
-  white: "#FFFFFF",
-};
+import palette from "../theme/palette";
+import { useSEO } from "../utils/useSEO";
 
 export default function ContactPage() {
+  useSEO({
+    title: "Contact Us & Campus Location | DPS Junior Public School",
+    description: "Contact the DPS Junior Public School admissions desk. Get directions, phone numbers, visiting hours, and submit an online inquiry.",
+    canonical: "/contact"
+  });
+
   const [formData, setFormData] = useState({
     parentName: "",
     email: "",

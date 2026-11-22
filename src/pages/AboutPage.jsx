@@ -10,8 +10,15 @@ import {
 import palette from "../theme/palette";
 import { scrollToElement } from "../utils/scroll";
 import VisitBookingForm from "../components/VisitBookingForm";
+import { useSEO } from "../utils/useSEO";
 
 export default function AboutPage() {
+  useSEO({
+    title: "About Us & Educational Philosophy | DPS Junior Public School",
+    description: "Learn about DPS Junior Public School's ethos, child-centered experiential learning pedagogy, 15-acre green parkland campus, and leadership.",
+    canonical: "/about"
+  });
+
   const location = useLocation();
 
   // Scroll to hash if URL contains #book-visit
