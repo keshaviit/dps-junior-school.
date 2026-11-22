@@ -90,7 +90,7 @@ export const schoolData = {
     admissionsEmail: "sharma.nupur0911@gmail.com",
     officeEmail: "shreyanshmanav999@gmail.com",
     mapUrl: "https://www.google.com/maps/dir//D.P.S.+Junior+Public+School+Baghpat,+Street+No.+7,+Meerut,+Rd,+Arya+Nagar,+Baghpat,+Uttar+Pradesh+250609/@28.6182658,77.0449321,15z/data=!4m8!4m7!1m0!1m5!1m1!1s0x390c530db8fa598b:0xd84ffdda7127eb2d!2m2!1d77.2262543!2d28.9447308?entry=ttu&g_ep=EgoyMDI2MTExNi4wIKXMDSoASAFQAw%3D%3D",
-    officeHours: "Monday to Friday: 8:00 AM – 3:30 PM | Saturday: 8:00 AM – 2:00 PM (No Saturday Off)",
+    officeHours: "Monday to Friday: 8:00 AM – 3:30 PM | Saturday: 8:00 AM – 2:00 PM",
     mapEmbedUrl: "https://www.google.com/maps?q=28.9447308,77.2262543&output=embed"
   },
 
